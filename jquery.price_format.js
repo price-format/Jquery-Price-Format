@@ -8,6 +8,7 @@
 
 * original char limit by Flávio Silveira <http://flaviosilveira.com>
 * original keydown event attachment by Kaihua Qi
+* keydown fixes by Thasmo <http://thasmo.com>
 
 */
 
@@ -104,11 +105,16 @@
 				var functional = false;
 				var str = obj.val();
 				var newValue = price_format(str+typed);
+				
+				// allow keypad numbers, 0 to 9
+				if(code >= 96 && code <= 105) functional = true;
 
-				// check Backspace, Tab, Enter
+				// check Backspace, Tab, Enter, and left/right arrows
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
 				if (code == 13) functional = true;
+				if (code == 37) functional = true;
+				if (code == 39) functional = true;
 
 				if (!functional) {
 					e.preventDefault();
@@ -124,7 +130,7 @@
 				var price = price_format(str);
 				if (str != price) obj.val(price);
 			}
-			
+
 			// bind the actions
 			$(this).bind('keydown', key_check);
 			$(this).bind('keyup', price_it);
