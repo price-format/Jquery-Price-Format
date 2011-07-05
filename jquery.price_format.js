@@ -1,14 +1,15 @@
 /*
 
 * Price Format jQuery Plugin
-* By Eduardo Cuducos
-* cuducos [at] gmail [dot] com
-* Version: 1.1
-* Release: 2009-02-10
+* Created By Eduardo Cuducos - cuducos [at] gmail [dot] com
+* Currently maintained by Flavio Silveira - flavio [at] gmail [dot] com
+* Version: 1.4
+* Release: 2011-05-17
 
-* original char limit by Flávio Silveira <http://flaviosilveira.com>
+* original char limit by Flavio Silveira <http://flaviosilveira.com>
 * original keydown event attachment by Kaihua Qi
 * keydown fixes by Thasmo <http://thasmo.com>
+* Clear Prefix on Blur suggest by Ricardo Mendes from PhonoWay
 
 */
 
@@ -21,7 +22,8 @@
 			centsSeparator: '.', 
 			thousandsSeparator: ',',
 			limit: false,
-			centsLimit: 2
+			centsLimit: 2,
+			clearPrefix: false
 		};
 
 		var options = $.extend(defaults, options);
@@ -38,6 +40,7 @@
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
+			var clearPrefix = options.clearPrefix;
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
@@ -130,11 +133,48 @@
 				var price = price_format(str);
 				if (str != price) obj.val(price);
 			}
-
+			
+			// Add prefix on focus
+			function add_prefix()
+			{
+				var val = obj.val();
+				obj.val(prefix + val);
+			}
+			
+			// Clear prefix on blur if is set to true
+			function clear_prefix()
+			{
+				var array = obj.val().split(prefix); 
+				obj.val(array[1]);
+			}
+			
 			// bind the actions
 			$(this).bind('keydown', key_check);
 			$(this).bind('keyup', price_it);
-			if ($(this).val().length>0) price_it();
+			
+			// Clear Prefix and Add Prefix if need
+			if(clearPrefix)
+			{
+				$(this).bind('focusout', function()
+				{ 
+					clear_prefix();
+				});
+				
+				$(this).bind('focusin', function()
+				{ 
+					add_prefix();
+				});
+			}
+			
+			// If value has content
+			if ($(this).val().length>0)
+			{
+				price_it();
+				
+				if(clearPrefix)
+					clear_prefix();
+			}
+				
 	
 		});
 	
