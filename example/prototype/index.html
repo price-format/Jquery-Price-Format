@@ -1,0 +1,21 @@
+<html>
+    
+    <head>
+        <script type="text/javascript" src="prototype.js"></script>
+        <script type="text/javascript" src="../../Prototype_Price_Format.js"></script>
+        <script type="text/javascript">
+            document.observe("dom:loaded", function() {
+              new NumberFormat('money', {prefix: 'U$', thousandsSeparator: ',', allowNegative: true});
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <h1>JQuery Price Format - Prototype Version - Example</h1>
+
+        <p><input type="text" value="123456" id="money" name="example1"></p>
+
+    </body>
+    
+</html>

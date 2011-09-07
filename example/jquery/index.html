@@ -1,0 +1,54 @@
+<html>
+    
+    <head>
+        <script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+        <script type="text/javascript" src="../../jquery.price_format.js"></script>
+        <script type="text/javascript">
+
+            $(function(){
+
+                $('#example1').priceFormat();
+
+                $('#example2').priceFormat({
+                    prefix: 'R$ ',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.'
+                });
+
+                $('#example3').priceFormat({
+                    prefix: '',
+                    thousandsSeparator: ''
+                });
+
+                $('#example4').priceFormat({
+                    limit: 5,
+                    centsLimit: 3
+                });
+
+                $('#example5').priceFormat({
+                    clearPrefix: true
+                });
+
+                $('#example6').priceFormat({
+                    allowNegative: true
+                });
+
+            });
+
+        </script>
+    </head>
+
+    <body>
+
+        <h1>JQuery Price Format Examples</h1>
+
+        <p><input type="text" value="123456" id="example1" name="example1"></p>
+        <p><input type="text" value="123456" id="example2" name="example2"></p>
+        <p><input type="text" value="123456" id="example3" name="example3"></p>
+        <p><input type="text" value="123456" id="example4" name="example4"></p>
+        <p><input type="text" value="123456" id="example5" name="example5"></p>
+        <p><input type="text" value="-123456" id="example6" name="example6"></p>
+
+    </body>
+    
+</html>
