@@ -56,18 +56,18 @@
 				var formatted = '';
 				for (var i=0;i<(str.length);i++) 
 				{
-					char = str.charAt(i);
-					if (formatted.length==0 && char==0) char = false;
+					var character = str.charAt(i);
+					if (formatted.length==0 && character==0) character = false;
 					
-					if (char && char.match(is_number))
+					if (character && character.match(is_number))
 					{
 						if (limit) 
 						{
-							if (formatted.length < limit) formatted = formatted+char;
+							if (formatted.length < limit) formatted = formatted+character;
 						}
 						else
 						{
-							formatted = formatted+char;
+							formatted = formatted+character;
 						}
 					}
 				}
@@ -102,10 +102,10 @@
 				{
 					for (var j=integerVal.length;j>0;j--) 
 					{
-						char = integerVal.substr(j-1,1);
+						var character = integerVal.substr(j-1,1);
 						thousandsCount++;
-						if (thousandsCount%3==0) char = thousandsSeparator+char;
-						thousandsFormatted = char+thousandsFormatted;
+						if (thousandsCount%3==0) character = thousandsSeparator+character;
+						thousandsFormatted = character+thousandsFormatted;
 					}
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
 					formatted = thousandsFormatted+centsSeparator+centsVal;
