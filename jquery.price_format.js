@@ -17,13 +17,13 @@
 
 (function($) {
 
-	$.fn.priceFormat = function(options) 
+	$.fn.priceFormat = function(options)
 	{
 
-		var defaults = 
+		var defaults =
 		{
 			prefix: 'US$ ',
-			centsSeparator: '.', 
+			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
@@ -33,7 +33,7 @@
 
 		var options = $.extend(defaults, options);
 
-		return this.each(function() 
+		return this.each(function()
 		{
 
 			// pre defined options
@@ -51,39 +51,39 @@
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
-			function to_numbers (str) 
+			function to_numbers (str)
 			{
 				var formatted = '';
-				for (var i=0;i<(str.length);i++) 
+				for (var i=0;i<(str.length);i++)
 				{
-					char = str.charAt(i);
-					if (formatted.length==0 && char==0) char = false;
-					
-					if (char && char.match(is_number))
+					char_ = str.charAt(i);
+					if (formatted.length==0 && char_==0) char_ = false;
+
+					if (char_ && char_.match(is_number))
 					{
-						if (limit) 
+						if (limit)
 						{
-							if (formatted.length < limit) formatted = formatted+char;
+							if (formatted.length < limit) formatted = formatted+char_;
 						}
 						else
 						{
-							formatted = formatted+char;
+							formatted = formatted+char_;
 						}
 					}
 				}
-				
+
 				return formatted;
 			}
 
 			// format to fill with zeros to complete cents chars
-			function fill_with_zeroes (str) 
+			function fill_with_zeroes (str)
 			{
 				while (str.length<(centsLimit+1)) str = '0'+str;
 				return str;
 			}
 
 			// format as price
-			function price_format (str) 
+			function price_format (str)
 			{
 				// formatting settings
 				var formatted = fill_with_zeroes(to_numbers(str));
@@ -98,14 +98,14 @@
 				formatted = integerVal+centsSeparator+centsVal;
 
 				// apply thousands pontuation
-				if (thousandsSeparator) 
+				if (thousandsSeparator)
 				{
-					for (var j=integerVal.length;j>0;j--) 
+					for (var j=integerVal.length;j>0;j--)
 					{
-						char = integerVal.substr(j-1,1);
+						char_ = integerVal.substr(j-1,1);
 						thousandsCount++;
-						if (thousandsCount%3==0) char = thousandsSeparator+char;
-						thousandsFormatted = char+thousandsFormatted;
+						if (thousandsCount%3==0) char_ = thousandsSeparator+char_;
+						thousandsFormatted = char_+thousandsFormatted;
 					}
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
 					formatted = thousandsFormatted+centsSeparator+centsVal;
@@ -121,14 +121,14 @@
 			}
 
 			// filter what user type (only numbers and functional keys)
-			function key_check (e) 
+			function key_check (e)
 			{
 				var code = (e.keyCode ? e.keyCode : e.which);
 				var typed = String.fromCharCode(code);
 				var functional = false;
 				var str = obj.val();
 				var newValue = price_format(str+typed);
-				
+
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
 
@@ -140,8 +140,8 @@
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
 				if (allowNegative && (code == 189 || code == 109)) functional = true; // dash as well
-				
-				if (!functional) 
+
+				if (!functional)
 				{
 					e.preventDefault();
 					e.stopPropagation();
@@ -151,58 +151,58 @@
 			}
 
 			// inster formatted price as a value of an input field
-			function price_it () 
+			function price_it ()
 			{
 				var str = obj.val();
 				var price = price_format(str);
 				if (str != price) obj.val(price);
 			}
-			
+
 			// Add prefix on focus
 			function add_prefix()
 			{
 				var val = obj.val();
 				obj.val(prefix + val);
 			}
-			
+
 			// Clear prefix on blur if is set to true
 			function clear_prefix()
 			{
 				if($.trim(prefix) != '' && clearPrefix)
 				{
-					var array = obj.val().split(prefix); 
+					var array = obj.val().split(prefix);
 					obj.val(array[1]);
 				}
 			}
-			
+
 			// bind the actions
 			$(this).bind('keydown', key_check);
 			$(this).bind('keyup', price_it);
-			
+
 			// Clear Prefix and Add Prefix
 			if(clearPrefix)
 			{
 				$(this).bind('focusout', function()
-				{ 
+				{
 					clear_prefix();
 				});
-				
+
 				$(this).bind('focusin', function()
-				{ 
+				{
 					add_prefix();
 				});
 			}
-			
+
 			// If value has content
 			if ($(this).val().length>0)
 			{
 				price_it();
 				clear_prefix();
 			}
-				
-	
+
+
 		});
-	
-	}; 		
-	
+
+	};
+
 })(jQuery);
