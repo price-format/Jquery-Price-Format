@@ -3,8 +3,8 @@
 * Price Format jQuery Plugin
 * Created By Eduardo Cuducos cuducos [at] gmail [dot] com
 * Currently maintained by Flavio Silveira flavio [at] gmail [dot] com
-* Version: 1.5
-* Release: 2011-06-27
+* Version: 1.6
+* Release: 2011-12-05
 
 * original char limit by Flavio Silveira <http://flaviosilveira.com>
 * original keydown event attachment by Kaihua Qi
