@@ -154,7 +154,7 @@
 			function price_it ()
 			{
 				var str = obj.val();
-				var price = price_format(str);
+        var price = price_format(str);
 				if (str != price) obj.val(price);
 			}
 
@@ -196,6 +196,13 @@
 			// If value has content
 			if ($(this).val().length>0)
 			{
+				var str = obj.val();
+        var decimalRegExp = new RegExp("[^.]\\d*$");
+        if (decimal = str.match(decimalRegExp)) {
+          // round str and ajust zeros after the decimal
+          if (decimal[0].length != centsLimit) str = (Math.round(parseFloat(str) * Math.pow(10, centsLimit)) / Math.pow(10, centsLimit)).toFixed(centsLimit).toString();
+          obj.val(str);
+        }
 				price_it();
 				clear_prefix();
 			}
