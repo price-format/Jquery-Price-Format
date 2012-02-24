@@ -33,6 +33,13 @@
                     allowNegative: true
                 });
 
+				$('#example7').priceFormat({
+					prefix: 'R$',
+                    suffix: '$$',
+					clearSuffix: true,
+					clearPrefix: true
+                });
+
             });
 
         </script>
@@ -42,12 +49,13 @@
 
         <h1>JQuery Price Format Examples</h1>
 
-        <p><input type="text" value="123456" id="example1" name="example1"></p>
+		<p><input type="text" value="123456" id="example1" name="example1"></p>
         <p><input type="text" value="123456" id="example2" name="example2"></p>
         <p><input type="text" value="123456" id="example3" name="example3"></p>
         <p><input type="text" value="123456" id="example4" name="example4"></p>
         <p><input type="text" value="123456" id="example5" name="example5"></p>
         <p><input type="text" value="-123456" id="example6" name="example6"></p>
+		<p><input type="text" value="123456" id="example7" name="example7"></p>
 
     </body>
     

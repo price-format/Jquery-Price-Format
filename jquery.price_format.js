@@ -3,8 +3,8 @@
 * Price Format jQuery Plugin
 * Created By Eduardo Cuducos cuducos [at] gmail [dot] com
 * Currently maintained by Flavio Silveira flavio [at] gmail [dot] com
-* Version: 1.6
-* Release: 2011-12-05
+* Version: 1.7
+* Release: 2012-02-22
 
 * original char limit by Flavio Silveira <http://flaviosilveira.com>
 * original keydown event attachment by Kaihua Qi
@@ -12,22 +12,28 @@
 * Clear Prefix on Blur suggest by Ricardo Mendes from PhonoWay
 * original allow negative by Cagdas Ucar <http://carsinia.com>
 * keypad fixes by Carlos Vinicius <http://www.kvinicius.com.br> and Rayron Victor
+* original Suffix by Marlon Pires Junior
 
 */
 
 (function($) {
 
+	/****************
+	* Main Function *
+	*****************/
 	$.fn.priceFormat = function(options)
 	{
 
 		var defaults =
 		{
 			prefix: 'US$ ',
+            suffix: '',
 			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
 			clearPrefix: false,
+            clearSufix: false,
 			allowNegative: false
 		};
 
@@ -42,11 +48,13 @@
 
 			// load the pluggings settings
 			var prefix = options.prefix;
+            var suffix = options.suffix;
 			var centsSeparator = options.centsSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
 			var clearPrefix = options.clearPrefix;
+            var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
 
 			// skip everything that isn't a number
@@ -116,6 +124,9 @@
 
 				// apply the prefix
 				if (prefix) formatted = prefix+formatted;
+                
+                // apply the suffix
+				if (suffix) formatted = formatted+suffix;
 
 				return formatted;
 			}
@@ -164,6 +175,12 @@
 				var val = obj.val();
 				obj.val(prefix + val);
 			}
+            
+            function add_suffix()
+			{
+				var val = obj.val();
+				obj.val(val + suffix);
+			}
 
 			// Clear prefix on blur if is set to true
 			function clear_prefix()
@@ -172,6 +189,16 @@
 				{
 					var array = obj.val().split(prefix);
 					obj.val(array[1]);
+				}
+			}
+            
+            // Clear suffix on blur if is set to true
+			function clear_suffix()
+			{
+				if($.trim(suffix) != '' && clearSuffix)
+				{
+					var array = obj.val().split(suffix);
+					obj.val(array[0]);
 				}
 			}
 
@@ -192,17 +219,47 @@
 					add_prefix();
 				});
 			}
+			
+			// Clear Suffix and Add Suffix
+			if(clearSuffix)
+			{
+				$(this).bind('focusout', function()
+				{
+                    clear_suffix();
+				});
+
+				$(this).bind('focusin', function()
+				{
+                    add_suffix();
+				});
+			}
 
 			// If value has content
 			if ($(this).val().length>0)
 			{
 				price_it();
 				clear_prefix();
+                clear_suffix();
 			}
-
 
 		});
 
+	};
+	
+	/******************
+	* Unmask Function *
+	*******************/
+	jQuery.fn.unmask = function(){
+		
+		var field = $(this).val();
+		var result = "";
+		
+		for(var f in field)
+		{
+			if(!isNaN(field[f]) || field[f] == "-") result += field[f];
+		}
+		
+		return result;
 	};
 
 })(jQuery);
