@@ -34,7 +34,8 @@
 			centsLimit: 2,
 			clearPrefix: false,
             clearSufix: false,
-			allowNegative: false
+			allowNegative: false,
+			bindHandler: true
 		};
 
 		var options = $.extend(defaults, options);
@@ -56,6 +57,7 @@
 			var clearPrefix = options.clearPrefix;
             var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
+			var bindHandler = options.bindHandler;
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
@@ -202,36 +204,38 @@
 				}
 			}
 
-			// bind the actions
-			$(this).bind('keydown', key_check);
-			$(this).bind('keyup', price_it);
+			// Bind the actions, unless we've been told not to:
+			if(bindHandler) {
+				$(this).bind('keydown', key_check);
+				$(this).bind('keyup', price_it);
 
-			// Clear Prefix and Add Prefix
-			if(clearPrefix)
-			{
-				$(this).bind('focusout', function()
+				// Clear Prefix and Add Prefix
+				if(clearPrefix)
 				{
-					clear_prefix();
-				});
+					$(this).bind('focusout', function()
+					{
+						clear_prefix();
+					});
 
-				$(this).bind('focusin', function()
+					$(this).bind('focusin', function()
+					{
+						add_prefix();
+					});
+				}
+				
+				// Clear Suffix and Add Suffix
+				if(clearSuffix)
 				{
-					add_prefix();
-				});
-			}
-			
-			// Clear Suffix and Add Suffix
-			if(clearSuffix)
-			{
-				$(this).bind('focusout', function()
-				{
-                    clear_suffix();
-				});
+					$(this).bind('focusout', function()
+					{
+						clear_suffix();
+					});
 
-				$(this).bind('focusin', function()
-				{
-                    add_suffix();
-				});
+					$(this).bind('focusin', function()
+					{
+						add_suffix();
+					});
+				}
 			}
 
 			// If value has content
@@ -249,7 +253,7 @@
 	/******************
 	* Unmask Function *
 	*******************/
-	jQuery.fn.unmask = function(){
+	$.fn.unmask = function() {
 		
 		var field = $(this).val();
 		var result = "";
