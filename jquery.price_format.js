@@ -124,7 +124,7 @@
 
                 // apply the prefix
                 if (prefix) formatted = prefix+formatted;
-                
+
                 // apply the suffix
                 if (suffix) formatted = formatted+suffix;
 
@@ -175,7 +175,7 @@
                 var val = obj.val();
                 obj.val(prefix + val);
             }
-            
+
             function add_suffix()
             {
                 var val = obj.val();
@@ -191,7 +191,7 @@
                     obj.val(array[1]);
                 }
             }
-            
+
             // Clear suffix on blur if is set to true
             function clear_suffix()
             {
@@ -219,7 +219,7 @@
                     add_prefix();
                 });
             }
-            
+
             // Clear Suffix and Add Suffix
             if(clearSuffix)
             {
@@ -245,20 +245,20 @@
         });
 
     };
-    
+
     /******************
     * Unmask Function *
     *******************/
     jQuery.fn.unmask = function(){
-        
+
         var field = $(this).val();
         var result = "";
-        
+
         for(var f in field)
         {
             if(!isNaN(field[f]) || field[f] == "-") result += field[f];
         }
-        
+
         return result;
     };
 
