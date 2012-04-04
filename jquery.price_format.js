@@ -256,7 +256,7 @@
     /******************
     * Unmask Function *
     *******************/
-    jQuery.fn.unmask = function(){
+    $.fn.unmask = function(){
 
         var field = $(this).val();
         var result = "";
