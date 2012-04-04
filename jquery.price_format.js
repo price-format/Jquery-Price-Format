@@ -203,18 +203,18 @@
             }
 
             // bind the actions
-            $(this).bind('keydown', key_check);
-            $(this).bind('keyup', price_it);
+            $(this).bind('keydown.price_format', key_check);
+            $(this).bind('keyup.price_format', price_it);
 
             // Clear Prefix and Add Prefix
             if(clearPrefix)
             {
-                $(this).bind('focusout', function()
+                $(this).bind('focusout.price_format', function()
                 {
                     clear_prefix();
                 });
 
-                $(this).bind('focusin', function()
+                $(this).bind('focusin.price_format', function()
                 {
                     add_prefix();
                 });
@@ -223,12 +223,12 @@
             // Clear Suffix and Add Suffix
             if(clearSuffix)
             {
-                $(this).bind('focusout', function()
+                $(this).bind('focusout.price_format', function()
                 {
                     clear_suffix();
                 });
 
-                $(this).bind('focusin', function()
+                $(this).bind('focusin.price_format', function()
                 {
                     add_suffix();
                 });
@@ -244,6 +244,13 @@
 
         });
 
+    };
+
+    /**********************
+    * Remove price format *
+    ***********************/
+    $.fn.unpriceFormat = function(){
+      return $(this).unbind(".price_format");
     };
 
     /******************
