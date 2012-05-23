@@ -32,7 +32,7 @@
                 $('#example6').priceFormat({
                     allowNegative: true
                 });
-
+                
 				$('#example7').priceFormat({
 					prefix: 'R$',
                     suffix: '$$',
@@ -40,6 +40,12 @@
 					clearPrefix: true
                 });
 
+                $('#example8').priceFormat({
+                    prefix: 'R$',
+                    thousandsSeparator: ".",
+                    removeCents: true
+                });
+                
             });
 
         </script>
@@ -55,7 +61,8 @@
         <p><input type="text" value="123456" id="example4" name="example4"></p>
         <p><input type="text" value="123456" id="example5" name="example5"></p>
         <p><input type="text" value="-123456" id="example6" name="example6"></p>
-		<p><input type="text" value="123456" id="example7" name="example7"></p>
+		    <p><input type="text" value="123456" id="example7" name="example7"></p>
+		    <p><input type="text" value="123456" id="example8" name="example8">,00</p>
 
     </body>
     

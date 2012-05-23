@@ -27,14 +27,15 @@
 		var defaults =
 		{
 			prefix: 'US$ ',
-            suffix: '',
+      suffix: '',
 			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
 			clearPrefix: false,
-            clearSufix: false,
-			allowNegative: false
+      clearSufix: false,
+			allowNegative: false,
+			removeCents: false
 		};
 
 		var options = $.extend(defaults, options);
@@ -48,14 +49,15 @@
 
 			// load the pluggings settings
 			var prefix = options.prefix;
-            var suffix = options.suffix;
+      var suffix = options.suffix;
 			var centsSeparator = options.centsSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
 			var clearPrefix = options.clearPrefix;
-            var clearSuffix = options.clearSuffix;
+      var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
+			var removeCents = options.removeCents;
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
@@ -94,16 +96,16 @@
 			function price_format (str)
 			{
 				// formatting settings
-				var formatted = fill_with_zeroes(to_numbers(str));
+				var formatted = (removeCents) ? to_numbers(str) : fill_with_zeroes(to_numbers(str));
 				var thousandsFormatted = '';
 				var thousandsCount = 0;
 
 				// split integer from cents
 				var centsVal = formatted.substr(formatted.length-centsLimit,centsLimit);
-				var integerVal = formatted.substr(0,formatted.length-centsLimit);
+				var integerVal = (removeCents) ? formatted.substr(0,formatted.length) : formatted.substr(0,formatted.length-centsLimit);
 
 				// apply cents pontuation
-				formatted = integerVal+centsSeparator+centsVal;
+				formatted = (removeCents) ? integerVal : integerVal+centsSeparator+centsVal;
 
 				// apply thousands pontuation
 				if (thousandsSeparator)
@@ -116,7 +118,7 @@
 						thousandsFormatted = char_+thousandsFormatted;
 					}
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
-					formatted = thousandsFormatted+centsSeparator+centsVal;
+					formatted = (removeCents) ? thousandsFormatted : thousandsFormatted+centsSeparator+centsVal;
 				}
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
