@@ -101,7 +101,7 @@
 				// split integer from cents
 				var centsVal = formatted.substr(formatted.length-centsLimit,centsLimit);
 				var integerVal = formatted.substr(0,formatted.length-centsLimit);
-
+				
 				// apply cents pontuation
 				formatted = integerVal+centsSeparator+centsVal;
 
@@ -112,10 +112,21 @@
 					{
 						char_ = integerVal.substr(j-1,1);
 						thousandsCount++;
+						
 						if (thousandsCount%3==0) char_ = thousandsSeparator+char_;
 						thousandsFormatted = char_+thousandsFormatted;
 					}
+					
+					// Verify CentsLimit
+					if(centsLimit == 0)
+					{
+						centsSeparator = "";
+						centsVal = "";
+					}
+					
+					// Clean if first char is the thousandSeparator
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
+					
 					formatted = thousandsFormatted+centsSeparator+centsVal;
 				}
 
