@@ -21,8 +21,8 @@
                 });
 
                 $('#example4').priceFormat({
-                    limit: 5,
-                    centsLimit: 3
+                    limit: 2,
+                    centsLimit: 1
                 });
 
                 $('#example5').priceFormat({
@@ -41,7 +41,20 @@
                 });
 
 				$("#unmask-test").click(function(){
-					alert($('#example6').unmask())
+					alert($('#example6').unmask());
+				});
+				
+				$("#unprice-test").click(function(){
+					$('#example7').unpriceFormat();
+				});
+				
+				$("#price-test").click(function(){
+					$('#example7').priceFormat({
+						prefix: 'R$',
+	                    suffix: '$$',
+						clearSuffix: true,
+						clearPrefix: true
+	                });
 				});
 
             });
@@ -87,6 +100,8 @@
 		<p>
 			Add Suffix
 			<input type="text" value="123456" id="example7" name="example7">
+			<button id="unprice-test">Unprice Format</button>
+			<button id="price-test">Price Format</button>
 		</p>
 
     </body>
