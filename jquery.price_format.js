@@ -142,7 +142,7 @@
 
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
-
+				
 				// check Backspace, Tab, Enter, Delete, and left/right arrows
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
@@ -205,6 +205,7 @@
 			// bind the actions
 			$(this).bind('keydown.price_format', key_check);
 			$(this).bind('keyup.price_format', price_it);
+			$(this).bind('focusout.price_format', price_it);
 
 			// Clear Prefix and Add Prefix
 			if(clearPrefix)
