@@ -98,6 +98,13 @@
 				var thousandsFormatted = '';
 				var thousandsCount = 0;
 
+				// Checking CentsLimit
+				if(centsLimit == 0)
+				{
+					centsSeparator = "";
+					centsVal = "";
+				}
+
 				// split integer from cents
 				var centsVal = formatted.substr(formatted.length-centsLimit,centsLimit);
 				var integerVal = formatted.substr(0,formatted.length-centsLimit);
@@ -106,7 +113,7 @@
 				formatted = integerVal+centsSeparator+centsVal;
 
 				// apply thousands pontuation
-				if (thousandsSeparator)
+				if (thousandsSeparator || $.trim(thousandsSeparator) != "")
 				{
 					for (var j=integerVal.length;j>0;j--)
 					{
@@ -115,6 +122,8 @@
 						if (thousandsCount%3==0) char_ = thousandsSeparator+char_;
 						thousandsFormatted = char_+thousandsFormatted;
 					}
+					
+					//
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
 					formatted = thousandsFormatted+centsSeparator+centsVal;
 				}
