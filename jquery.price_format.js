@@ -156,10 +156,13 @@
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
 				if (code == 13) functional = true;
-				if (code == 46) functional = true;
-				if (code == 37) functional = true;
-				if (code == 39) functional = true;
 				if (allowNegative && (code == 189 || code == 109)) functional = true; // dash as well
+
+                                //Allow Home, End, Shift, Caps Lock, Esc
+                                if (code >= 16 && code <= 20) functional = true;
+                                if (code == 27) functional = true;
+                                if (code >= 33 && code <= 40) functional = true;
+                                if (code >= 44 && code <= 46) functional = true;
 
 				if (!functional)
 				{
