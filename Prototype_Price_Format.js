@@ -55,16 +55,10 @@ keyCheck : function(e) {
 		functional = true;
 	if (code == 13)
 		functional = true;
-	if (code == 46)
-		functional = true;
-	if (code == 35)
-		functional = true;
-	if (code == 36)
-		functional = true;
-	if (code == 37)
-		functional = true;
-	if (code == 39)
-		functional = true;
+	if (code >= 16 && code <= 20) functional = true;
+	if (code == 27) functional = true;
+	if (code >= 33 && code <= 40) functional = true;
+	if (code >= 44 && code <= 46) functional = true;
 	if (this.allowNegative && (code == 189 || code == 109))
 		functional = true; // dash as well
 
