@@ -180,10 +180,10 @@
                 {
                     if (e && $().caret)
                     {
-                        var pos = $(e.target).caret().start;
+                        var pos = $(e.target).caret()[0];
                         pos = pos + price.length - str.length;
                         obj.val(price);
-                        $(e.target).caret({start : pos, end: pos});
+                        $(e.target).caret(pos);
                     } 
                     else
                     {
