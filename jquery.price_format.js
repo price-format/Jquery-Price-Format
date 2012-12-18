@@ -268,7 +268,7 @@
     *******************/
     $.fn.unmask = function(){
 
-        var field = $(this).val();
+        var field = $(this).val() || [];
         var result = "";
 
         for(var f = 0; f < field.length; f++)
