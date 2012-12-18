@@ -271,7 +271,7 @@
         var field = $(this).val();
         var result = "";
 
-        for(var f in field)
+        for(var f = 0; f < field.length; f++)
         {
             if(!isNaN(field[f]) || field[f] == "-") result += field[f];
         }
