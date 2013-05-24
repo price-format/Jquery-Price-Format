@@ -138,7 +138,7 @@
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
 				if (allowNegative && str.indexOf('-') != -1 && (integerVal != 0 || centsVal != 0))
 					formatted = '-' + formatted;
-				else if (insertPlusSign)
+				else if (insertPlusSign && (integerVal != 0 || centsVal != 0))
 					formatted = '+' + formatted;
 
 				// apply the prefix
