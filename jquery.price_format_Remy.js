@@ -13,8 +13,6 @@
 * original allow negative by Cagdas Ucar <http://carsinia.com>
 * keypad fixes by Carlos Vinicius <http://www.kvinicius.com.br> and Rayron Victor
 * original Suffix by Marlon Pires Junior
-* CentsLimit set to zero fixed by Jereon de Jong
-* original idea for the use of the plus sign
 
 */
 
@@ -29,15 +27,14 @@
 		var defaults =
 		{
 			prefix: 'US$ ',
-            suffix: '',
+			suffix: '',
 			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
 			clearPrefix: false,
-            clearSufix: false,
-			allowNegative: false,
-			insertPlusSign: false
+			clearSufix: false,
+			allowNegative: false
 		};
 
 		var options = $.extend(defaults, options);
@@ -51,18 +48,14 @@
 
 			// load the pluggings settings
 			var prefix = options.prefix;
-            var suffix = options.suffix;
+			var suffix = options.suffix;
 			var centsSeparator = options.centsSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
 			var clearPrefix = options.clearPrefix;
-            var clearSuffix = options.clearSuffix;
+			var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
-			var insertPlusSign = options.insertPlusSign;
-			
-			// If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
-			if (insertPlusSign) allowNegative = true;
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
@@ -105,22 +98,15 @@
 				var thousandsFormatted = '';
 				var thousandsCount = 0;
 
-				// Checking CentsLimit
-				if(centsLimit == 0)
-				{
-					centsSeparator = "";
-					centsVal = "";
-				}
-
 				// split integer from cents
 				var centsVal = formatted.substr(formatted.length-centsLimit,centsLimit);
 				var integerVal = formatted.substr(0,formatted.length-centsLimit);
 
 				// apply cents pontuation
-				formatted = (centsLimit==0) ? integerVal : integerVal+centsSeparator+centsVal;
+				formatted = integerVal+centsSeparator+centsVal;
 
 				// apply thousands pontuation
-				if (thousandsSeparator || $.trim(thousandsSeparator) != "")
+				if (thousandsSeparator)
 				{
 					for (var j=integerVal.length;j>0;j--)
 					{
@@ -129,22 +115,23 @@
 						if (thousandsCount%3==0) char_ = thousandsSeparator+char_;
 						thousandsFormatted = char_+thousandsFormatted;
 					}
-					
-					//
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
-					formatted = (centsLimit==0) ? thousandsFormatted : thousandsFormatted+centsSeparator+centsVal;
+					formatted = thousandsFormatted+centsSeparator+centsVal;
 				}
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
-				if (allowNegative && str.indexOf('-') != -1 && (integerVal != 0 || centsVal != 0))
-					formatted = '-' + formatted;
-				else if (insertPlusSign)
-					formatted = '+' + formatted;
+				if (allowNegative && (integerVal != 0 || centsVal != 0)) {
+					if (str.indexOf('-') != -1 && str.indexOf('+')<str.indexOf('-') ) {
+						formatted = '-' + formatted;
+					} else {
+						formatted = '' + formatted;
+					}
+				}
 
 				// apply the prefix
 				if (prefix) formatted = prefix+formatted;
-                
-                // apply the suffix
+
+				// apply the suffix
 				if (suffix) formatted = formatted+suffix;
 
 				return formatted;
@@ -161,7 +148,7 @@
 
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
-				
+
 				// check Backspace, Tab, Enter, Delete, and left/right arrows
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
@@ -170,6 +157,7 @@
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
 				if (allowNegative && (code == 189 || code == 109)) functional = true; // dash as well
+				if (allowNegative && (code == 107)) functional = true; // numpad + as well
 
 				if (!functional)
 				{
@@ -194,8 +182,8 @@
 				var val = obj.val();
 				obj.val(prefix + val);
 			}
-            
-            function add_suffix()
+
+			function add_suffix()
 			{
 				var val = obj.val();
 				obj.val(val + suffix);
@@ -210,8 +198,8 @@
 					obj.val(array[1]);
 				}
 			}
-            
-            // Clear suffix on blur if is set to true
+
+			// Clear suffix on blur if is set to true
 			function clear_suffix()
 			{
 				if($.trim(suffix) != '' && clearSuffix)
@@ -222,19 +210,18 @@
 			}
 
 			// bind the actions
-			$(this).bind('keydown.price_format', key_check);
-			$(this).bind('keyup.price_format', price_it);
-			$(this).bind('focusout.price_format', price_it);
+			$(this).bind('keydown', key_check);
+			$(this).bind('keyup', price_it);
 
 			// Clear Prefix and Add Prefix
 			if(clearPrefix)
 			{
-				$(this).bind('focusout.price_format', function()
+				$(this).bind('focusout', function()
 				{
 					clear_prefix();
 				});
 
-				$(this).bind('focusin.price_format', function()
+				$(this).bind('focusin', function()
 				{
 					add_prefix();
 				});
@@ -243,14 +230,14 @@
 			// Clear Suffix and Add Suffix
 			if(clearSuffix)
 			{
-				$(this).bind('focusout.price_format', function()
+				$(this).bind('focusout', function()
 				{
-                    clear_suffix();
+					clear_suffix();
 				});
 
-				$(this).bind('focusin.price_format', function()
+				$(this).bind('focusin', function()
 				{
-                    add_suffix();
+					add_suffix();
 				});
 			}
 
@@ -259,34 +246,27 @@
 			{
 				price_it();
 				clear_prefix();
-                clear_suffix();
+				clear_suffix();
 			}
 
 		});
 
 	};
 	
-	/**********************
-    * Remove price format *
-    ***********************/
-    $.fn.unpriceFormat = function(){
-      return $(this).unbind(".price_format");
-    };
-
-    /******************
-    * Unmask Function *
-    *******************/
-    $.fn.unmask = function(){
-
-        var field = $(this).val();
-        var result = "";
-
-        for(var f in field)
-        {
-            if(!isNaN(field[f]) || field[f] == "-") result += field[f];
-        }
-
-        return result;
-    };
+	/******************
+	* Unmask Function *
+	*******************/
+	jQuery.fn.unmask = function(){
+		
+		var field = $(this).val();
+		var result = "";
+		
+		for(var f in field)
+		{
+			if(!isNaN(field[f]) || field[f] == "-") result += field[f];
+		}
+		
+		return result;
+	};
 
 })(jQuery);
