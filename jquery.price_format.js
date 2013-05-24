@@ -169,8 +169,10 @@
 				if (code == 46) functional = true;
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
+				// Minus Sign, Plus Sign
 				if (allowNegative && (code == 189 || code == 109)) functional = true; // dash as well
-
+				if (insertPlusSign && (code == 187 || code == 107)) functional = true;
+				
 				if (!functional)
 				{
 					e.preventDefault();
