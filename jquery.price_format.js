@@ -110,7 +110,7 @@
 				var integerVal = formatted.substr(0,formatted.length-centsLimit);
 
 				// apply cents pontuation
-				formatted = integerVal+centsSeparator+centsVal;
+				formatted = (centsLimit==0) ? integerVal : integerVal+centsSeparator+centsVal;
 
 				// apply thousands pontuation
 				if (thousandsSeparator || $.trim(thousandsSeparator) != "")
@@ -125,7 +125,7 @@
 					
 					//
 					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
-					formatted = thousandsFormatted+centsSeparator+centsVal;
+					formatted = (centsLimit==0) ? thousandsFormatted : thousandsFormatted+centsSeparator+centsVal;
 				}
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
