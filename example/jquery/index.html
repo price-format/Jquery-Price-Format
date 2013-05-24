@@ -37,7 +37,12 @@
 					prefix: 'R$',
                     suffix: '$$',
 					clearSuffix: true,
-					clearPrefix: true,
+					clearPrefix: true
+                });
+				
+                $('#example8').priceFormat({
+                    prefix: '',
+                    thousandsSeparator: '',
 					insertPlusSign: true
                 });
 
@@ -103,6 +108,11 @@
 			<input type="text" value="123456" id="example7" name="example7">
 			<button id="unprice-test">Unprice Format</button>
 			<button id="price-test">Price Format</button>
+		</p>
+		
+        <p>
+			Using the plus sign
+			<input type="text" value="123456" id="example8" name="example8">
 		</p>
 
     </body>
