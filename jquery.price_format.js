@@ -136,10 +136,20 @@
 				}
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
-				if (allowNegative && str.indexOf('-') != -1 && (integerVal != 0 || centsVal != 0))
-					formatted = '-' + formatted;
-				else if (insertPlusSign && (integerVal != 0 || centsVal != 0))
-					formatted = '+' + formatted;
+				if (allowNegative && (integerVal != 0 || centsVal != 0))
+				{
+					if (str.indexOf('-') != -1 && str.indexOf('+')<str.indexOf('-') )
+					{
+						formatted = '-' + formatted;
+					}
+					else
+					{
+						if(!insertPlusSign)
+							formatted = '' + formatted;
+						else
+							formatted = '+' + formatted;
+					}
+				}
 
 				// apply the prefix
 				if (prefix) formatted = prefix+formatted;
@@ -170,7 +180,7 @@
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
 				// Minus Sign, Plus Sign
-				if (allowNegative && (code == 189 || code == 109)) functional = true; // dash as well
+				if (allowNegative && (code == 189 || code == 109)) functional = true;
 				if (insertPlusSign && (code == 187 || code == 107)) functional = true;
 				
 				if (!functional)
