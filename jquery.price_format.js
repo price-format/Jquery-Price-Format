@@ -37,7 +37,8 @@
 			clearPrefix: false,
             clearSufix: false,
 			allowNegative: false,
-			insertPlusSign: false
+			insertPlusSign: false,
+			clearOnEmpty:false
 		};
 
 		var options = $.extend(defaults, options);
@@ -60,6 +61,7 @@
             var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
 			var insertPlusSign = options.insertPlusSign;
+			var clearOnEmpty = options.clearOnEmpty;
 			
 			// If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
 			if (insertPlusSign) allowNegative = true;
@@ -98,8 +100,13 @@
 			}
 
 			// format as price
-			function price_format (str)
+			function price_format (str, ignore)
 			{
+				if(!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty) {
+
+					return '';
+				}
+
 				// formatting settings
 				var formatted = fill_with_zeroes(to_numbers(str));
 				var thousandsFormatted = '';
@@ -185,6 +192,7 @@
 				
 				if (!functional)
 				{
+					
 					e.preventDefault();
 					e.stopPropagation();
 					if (str!=newValue) obj.val(newValue);
