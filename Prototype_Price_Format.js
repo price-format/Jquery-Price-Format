@@ -9,7 +9,8 @@ NumberFormat = Class.create( {
 			limit : false,
 			centsLimit : 2,
 			clearPrefix : false,
-			allowNegative : false
+			allowNegative : false,
+			clearOnEmpty: false
 		}, options);
 
 		this.is_number = /[0-9]/;
@@ -22,7 +23,7 @@ NumberFormat = Class.create( {
 	this.centsLimit = options.centsLimit;
 	this.clearPrefix = options.clearPrefix;
 	this.allowNegative = options.allowNegative;
-
+	this.clearOnEmpty = options.clearOnEmpty;
 	if (this.clearPrefix) {
 		Event.observe(this.el, 'blur', this.clearPrefix.bind(this));
 		Event.observe(this.el, 'focus', this.addPrefix.bind(this));
@@ -96,7 +97,12 @@ toNumbers : function(str) {
 	return formatted;
 },
 
-priceFormat : function(str) {
+priceFormat : function(str, ignore) {
+	if(!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty) {
+
+		return '';
+	}
+	
 	// formatting settings
 	var formatted = this.fillWithZeroes(this.toNumbers(str));
 	var thousandsFormatted = '';
