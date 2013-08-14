@@ -31,6 +31,8 @@
             suffix: '',
 			decimalSeparator: '.',
 			thousandsSeparator: ',',
+			useLakhs: false,
+            lakhsSeparator: ",",
 			limit: false,
 			decimalLimit: 2,
 			clearPrefix: false,
@@ -52,6 +54,8 @@
             var suffix = options.suffix;
 			var decimalSeparator = options.decimalSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
+			var lakhsSeparator = options.lakhsSeparator;
+			var useLakhs = options.useLakhs;
 			var limit = options.limit;
 			var decimalLimit = options.decimalLimit;
 			var clearPrefix = options.clearPrefix;
@@ -81,6 +85,10 @@
 						
 							formatted = formatted + char_;
 						}
+					}
+					
+					if (char_ && (centsLimit == 0) && char_ == decimalSeparator){
+						break;
 					}
 				}
 
@@ -117,7 +125,7 @@
 				formatted = (decimalLimit == 0) ? integerVal : integerVal + decimalSeparator + decimalVal;
 
 				// apply thousands punctuation
-				if (thousandsSeparator || $.trim(thousandsSeparator) != "") {
+				if (!useLakhs && (thousandsSeparator || $.trim(thousandsSeparator) != "")) {
 				
 					for (var j = integerVal.length; j > 0; j--) {
 					
@@ -127,9 +135,30 @@
 						thousandsFormatted = char_ + thousandsFormatted;
 					}
 					
-					if (thousandsFormatted.substr(0, 1) == thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1, thousandsFormatted.length);
+					if (thousandsFormatted.substr(0, 1) == thousandsSeparator) 
+						thousandsFormatted = thousandsFormatted.substring(1, thousandsFormatted.length);
+						
 					formatted = (decimalLimit == 0) ? thousandsFormatted : thousandsFormatted + decimalSeparator + decimalVal;
 				}
+				
+				// apply lakhs punctuation
+				if (useLakhs && (lakhsSeparator || $.trim(lakhsSeparator) != "")) {
+				
+                    var flag = false;
+                    for (var j = integerVal.length; j > 0; j--)
+                    {
+                        char_ = integerVal.substr(j - 1, 1);
+                        lakhsCount++;
+                        if (lakhsCount % 3 == 0 && !flag) {char_ = thousandsSeparator + char_; flag = true;}
+                        else if ((lakhsCount - 3) % 2 == 0 && flag) char_ = lakhsSeparator + char_;
+                        lakhsFormatted = char_ + lakhsFormatted;
+                    }
+
+                    if (lakhsFormatted.substr(0, 1) == lakhsSeparator) 
+                        lakhsFormatted = lakhsFormatted.substring(1, lakhsFormatted.length);
+                    
+                    formatted = (decimalLimit == 0) ? lakhsFormatted : lakhsFormatted + decimalSeparator + decimalVal;
+                }
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
 				if (allowNegative && (integerVal != 0 || decimalVal != 0)) {
@@ -274,6 +303,7 @@
     * Remove price format *
     ***********************/
     $.fn.unpriceFormat = function() {
+	
       return $(this).unbind(".price_format");
     };
 
@@ -286,6 +316,7 @@
         var result = "";
 
         for(var f in field) {
+		
             if(!isNaN(field[f]) || field[f] == "-") result += field[f];
         }
 
