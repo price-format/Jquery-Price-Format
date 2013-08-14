@@ -23,17 +23,18 @@
 	/****************
 	* Main Function *
 	*****************/
-	$.fn.priceFormat = function(options)
-	{
-
+	$.fn.priceFormat = function(options) {
+		
 		var defaults =
 		{
 			prefix: 'US$ ',
             suffix: '',
-			centsSeparator: '.',
+			decimalSeparator: '.',
 			thousandsSeparator: ',',
+			useLakhs: false,
+            lakhsSeparator: ",",
 			limit: false,
-			centsLimit: 2,
+			decimalLimit: 2,
 			clearPrefix: false,
             clearSufix: false,
 			allowNegative: false,
@@ -42,8 +43,7 @@
 
 		var options = $.extend(defaults, options);
 
-		return this.each(function()
-		{
+		return this.each(function() {
 
 			// pre defined options
 			var obj = $(this);
@@ -52,10 +52,12 @@
 			// load the pluggings settings
 			var prefix = options.prefix;
             var suffix = options.suffix;
-			var centsSeparator = options.centsSeparator;
+			var decimalSeparator = options.decimalSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
+			var lakhsSeparator = options.lakhsSeparator;
+			var useLakhs = options.useLakhs;
 			var limit = options.limit;
-			var centsLimit = options.centsLimit;
+			var decimalLimit = options.decimalLimit;
 			var clearPrefix = options.clearPrefix;
             var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
@@ -66,84 +68,108 @@
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
-			function to_numbers (str)
-			{
+			function to_numbers(str) {
+			
 				var formatted = '';
-				for (var i=0;i<(str.length);i++)
-				{
+				for (var i = 0; i < (str.length); i++) {
+				
 					char_ = str.charAt(i);
-					if (formatted.length==0 && char_==0) char_ = false;
+					if (formatted.length == 0 && char_ == 0) char_ = false;
 
-					if (char_ && char_.match(is_number))
-					{
-						if (limit)
-						{
-							if (formatted.length < limit) formatted = formatted+char_;
+					if (char_ && char_.match(is_number)) {
+						
+						if (limit) {
+						
+							if (formatted.length < limit) formatted = formatted + char_;
+						} else {
+						
+							formatted = formatted + char_;
 						}
-						else
-						{
-							formatted = formatted+char_;
-						}
+					}
+					
+					if (char_ && (decimalLimit == false) && char_ == decimalSeparator){
+						break;
 					}
 				}
 
 				return formatted;
 			}
 
-			// format to fill with zeros to complete cents chars
-			function fill_with_zeroes (str)
-			{
-				while (str.length<(centsLimit+1)) str = '0'+str;
+			// format to fill with zeros to complete decimal chars
+			function fill_with_zeroes (str) {
+			
+				while (str.length < (decimalLimit + 1)) str = '0' + str;
 				return str;
 			}
 
 			// format as price
-			function price_format (str)
-			{
+			function price_format(str) {
+			
 				// formatting settings
 				var formatted = fill_with_zeroes(to_numbers(str));
 				var thousandsFormatted = '';
 				var thousandsCount = 0;
+				var lakhsFormatted = '';
+				var lakhsCount = 0;
 
-				// Checking CentsLimit
-				if(centsLimit == 0)
-				{
-					centsSeparator = "";
-					centsVal = "";
+				// Checking decimalLimit
+				if(decimalLimit == 0) {
+				
+					decimalSeparator = "";
+					decimalVal = "";
 				}
 
-				// split integer from cents
-				var centsVal = formatted.substr(formatted.length-centsLimit,centsLimit);
-				var integerVal = formatted.substr(0,formatted.length-centsLimit);
+				// split integer from decimal
+				var decimalVal = formatted.substr(formatted.length - decimalLimit, decimalLimit);
+				var integerVal = formatted.substr(0, formatted.length - decimalLimit);
 
-				// apply cents pontuation
-				formatted = (centsLimit==0) ? integerVal : integerVal+centsSeparator+centsVal;
+				// apply decimal punctuation
+				formatted = (decimalLimit == 0) ? integerVal : integerVal + decimalSeparator + decimalVal;
 
-				// apply thousands pontuation
-				if (thousandsSeparator || $.trim(thousandsSeparator) != "")
-				{
-					for (var j=integerVal.length;j>0;j--)
-					{
-						char_ = integerVal.substr(j-1,1);
+				// apply thousands punctuation
+				if (!useLakhs && (thousandsSeparator || $.trim(thousandsSeparator) != "")) {
+				
+					for (var j = integerVal.length; j > 0; j--) {
+					
+						char_ = integerVal.substr(j - 1, 1);
 						thousandsCount++;
-						if (thousandsCount%3==0) char_ = thousandsSeparator+char_;
-						thousandsFormatted = char_+thousandsFormatted;
+						if (thousandsCount % 3 == 0) char_ = thousandsSeparator + char_;
+						thousandsFormatted = char_ + thousandsFormatted;
 					}
 					
-					//
-					if (thousandsFormatted.substr(0,1)==thousandsSeparator) thousandsFormatted = thousandsFormatted.substring(1,thousandsFormatted.length);
-					formatted = (centsLimit==0) ? thousandsFormatted : thousandsFormatted+centsSeparator+centsVal;
+					if (thousandsFormatted.substr(0, 1) == thousandsSeparator) 
+						thousandsFormatted = thousandsFormatted.substring(1, thousandsFormatted.length);
+						
+					formatted = (decimalLimit == 0) ? thousandsFormatted : thousandsFormatted + decimalSeparator + decimalVal;
 				}
+				
+				// apply lakhs punctuation
+				if (useLakhs && (lakhsSeparator || $.trim(lakhsSeparator) != "")) {
+				
+                    var flag = false;
+                    for (var j = integerVal.length; j > 0; j--)
+                    {
+                        char_ = integerVal.substr(j - 1, 1);
+                        lakhsCount++;
+                        if (lakhsCount % 3 == 0 && !flag) {char_ = thousandsSeparator + char_; flag = true;}
+                        else if ((lakhsCount - 3) % 2 == 0 && flag) char_ = lakhsSeparator + char_;
+                        lakhsFormatted = char_ + lakhsFormatted;
+                    }
+
+                    if (lakhsFormatted.substr(0, 1) == lakhsSeparator) 
+                        lakhsFormatted = lakhsFormatted.substring(1, lakhsFormatted.length);
+                    
+                    formatted = (decimalLimit == 0) ? lakhsFormatted : lakhsFormatted + decimalSeparator + decimalVal;
+                }
 
 				// if the string contains a dash, it is negative - add it to the begining (except for zero)
-				if (allowNegative && (integerVal != 0 || centsVal != 0))
-				{
-					if (str.indexOf('-') != -1 && str.indexOf('+')<str.indexOf('-') )
-					{
+				if (allowNegative && (integerVal != 0 || decimalVal != 0)) {
+				
+					if (str.indexOf('-') != -1 && str.indexOf('+') < str.indexOf('-') ) {
+					
 						formatted = '-' + formatted;
-					}
-					else
-					{
+					} else {
+					
 						if(!insertPlusSign)
 							formatted = '' + formatted;
 						else
@@ -152,22 +178,22 @@
 				}
 
 				// apply the prefix
-				if (prefix) formatted = prefix+formatted;
+				if (prefix) formatted = prefix + formatted;
                 
                 // apply the suffix
-				if (suffix) formatted = formatted+suffix;
+				if (suffix) formatted = formatted + suffix;
 
 				return formatted;
 			}
 
 			// filter what user type (only numbers and functional keys)
-			function key_check (e)
-			{
+			function key_check(e) {
+			
 				var code = (e.keyCode ? e.keyCode : e.which);
 				var typed = String.fromCharCode(code);
 				var functional = false;
 				var str = obj.val();
-				var newValue = price_format(str+typed);
+				var newValue = price_format(str + typed);
 
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
@@ -183,51 +209,50 @@
 				if (allowNegative && (code == 189 || code == 109)) functional = true;
 				if (insertPlusSign && (code == 187 || code == 107)) functional = true;
 				
-				if (!functional)
-				{
+				if (!functional) {
+				
 					e.preventDefault();
 					e.stopPropagation();
 					if (str!=newValue) obj.val(newValue);
 				}
-
 			}
 
 			// inster formatted price as a value of an input field
-			function price_it ()
-			{
+			function price_it() {
+			
 				var str = obj.val();
 				var price = price_format(str);
 				if (str != price) obj.val(price);
 			}
 
 			// Add prefix on focus
-			function add_prefix()
-			{
+			function add_prefix() {
+			
 				var val = obj.val();
 				obj.val(prefix + val);
 			}
             
-            function add_suffix()
-			{
+            function add_suffix() {
+			
 				var val = obj.val();
 				obj.val(val + suffix);
 			}
 
 			// Clear prefix on blur if is set to true
-			function clear_prefix()
-			{
-				if($.trim(prefix) != '' && clearPrefix)
-				{
+			function clear_prefix() {
+			
+				if($.trim(prefix) != '' && clearPrefix) {
+				
 					var array = obj.val().split(prefix);
 					obj.val(array[1]);
 				}
 			}
             
             // Clear suffix on blur if is set to true
-			function clear_suffix()
-			{
-				if($.trim(suffix) != '' && clearSuffix)
-				{
+			function clear_suffix() {
+			
+				if($.trim(suffix) != '' && clearSuffix) {
+				
 					var array = obj.val().split(suffix);
 					obj.val(array[0]);
 				}
@@ -239,62 +264,61 @@
 			$(this).bind('focusout.price_format', price_it);
 
 			// Clear Prefix and Add Prefix
-			if(clearPrefix)
-			{
-				$(this).bind('focusout.price_format', function()
-				{
+			if(clearPrefix) {
+			
+				$(this).bind('focusout.price_format', function() {
+				
 					clear_prefix();
 				});
 
-				$(this).bind('focusin.price_format', function()
-				{
+				$(this).bind('focusin.price_format', function() {
+				
 					add_prefix();
 				});
 			}
 			
 			// Clear Suffix and Add Suffix
-			if(clearSuffix)
-			{
-				$(this).bind('focusout.price_format', function()
-				{
-                    clear_suffix();
+			if(clearSuffix) {
+			
+				$(this).bind('focusout.price_format', function() {
+				
+				    clear_suffix();
 				});
 
-				$(this).bind('focusin.price_format', function()
-				{
+				$(this).bind('focusin.price_format', function() {
+				
                     add_suffix();
 				});
 			}
 
 			// If value has content
-			if ($(this).val().length>0)
-			{
+			if ($(this).val().length > 0) {
+			
 				price_it();
 				clear_prefix();
                 clear_suffix();
 			}
-
 		});
-
 	};
 	
 	/**********************
     * Remove price format *
     ***********************/
-    $.fn.unpriceFormat = function(){
+    $.fn.unpriceFormat = function() {
+	
       return $(this).unbind(".price_format");
     };
 
     /******************
     * Unmask Function *
     *******************/
-    $.fn.unmask = function(){
+    $.fn.unmask = function() {
 
         var field = $(this).val();
         var result = "";
 
-        for(var f in field)
-        {
+        for(var f in field) {
+		
             if(!isNaN(field[f]) || field[f] == "-") result += field[f];
         }
 

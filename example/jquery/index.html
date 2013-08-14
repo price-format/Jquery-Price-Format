@@ -11,7 +11,7 @@
 
                 $('#example2').priceFormat({
                     prefix: 'R$ ',
-                    centsSeparator: ',',
+                    decimalSeparator: ',',
                     thousandsSeparator: '.'
                 });
 
@@ -22,7 +22,7 @@
 
                 $('#example4').priceFormat({
                     limit: 2,
-                    centsLimit: 1
+                    decimalLimit: 1
                 });
 
                 $('#example5').priceFormat({
@@ -62,6 +62,11 @@
 						clearPrefix: true
 	                });
 				});
+				
+				$('#example9').priceFormat({
+                    limit: false,
+                    decimalLimit: false
+                });
 
             });
 
@@ -91,7 +96,7 @@
 			Working with limits
 			<input type="text" value="123456" id="example4" name="example4">
 		</p>
-		
+				
         <p>
 			Clear Prefix and Suffix on Blur
 			<input type="text" value="123456" id="example5" name="example5">
@@ -114,9 +119,11 @@
 			Using the plus sign
 			<input type="text" value="123456" id="example8" name="example8">
 		</p>
+		
+		<p>
+			Working with limits set to zero
+			<input type="text" value="1234.56" id="example9" name="example9">
+		</p>
 
     </body>
-    
-	
-
 </html>
