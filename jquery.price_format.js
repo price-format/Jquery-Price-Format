@@ -109,6 +109,8 @@
 				var formatted = fill_with_zeroes(to_numbers(str));
 				var thousandsFormatted = '';
 				var thousandsCount = 0;
+				var lakhsFormatted = '';
+				var lakhsCount = 0;
 
 				// Checking decimalLimit
 				if(decimalLimit == 0) {
