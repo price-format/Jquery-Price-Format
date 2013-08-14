@@ -87,7 +87,7 @@
 						}
 					}
 					
-					if (char_ && (centsLimit == 0) && char_ == decimalSeparator){
+					if (char_ && (decimalLimit == false) && char_ == decimalSeparator){
 						break;
 					}
 				}
