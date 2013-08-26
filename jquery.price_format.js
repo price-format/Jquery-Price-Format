@@ -102,10 +102,8 @@
 			// format as price
 			function price_format (str, ignore)
 			{
-				if(!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty) {
-
+				if(!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty)
 					return '';
-				}
 
 				// formatting settings
 				var formatted = fill_with_zeroes(to_numbers(str));
