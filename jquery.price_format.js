@@ -206,6 +206,7 @@
 				var str = obj.val();
 				var price = price_format(str);
 				if (str != price) obj.val(price);
+				if(parseFloat(str) == 0.0 && clearOnEmpty) obj.val('');
 			}
 
 			// Add prefix on focus
