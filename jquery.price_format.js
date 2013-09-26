@@ -185,8 +185,8 @@
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
 				// Minus Sign, Plus Sign
-				if (allowNegative && (code == 189 || code == 109)) functional = true;
-				if (insertPlusSign && (code == 187 || code == 107)) functional = true;
+				if (allowNegative && (code == 189 || code == 109 || code == 173)) functional = true;
+				if (insertPlusSign && (code == 187 || code == 107 || code == 61)) functional = true;
 				
 				if (!functional)
 				{
