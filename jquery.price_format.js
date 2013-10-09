@@ -203,7 +203,10 @@
 			{
 				var str = obj.val();
 				var price = price_format(str);
-				if (str != price) obj.val(price);
+				if (str != price) {
+					obj.val(price);
+					obj.trigger('change');
+				}
 				if(parseFloat(str) == 0.0 && clearOnEmpty) obj.val('');
 			}
 
