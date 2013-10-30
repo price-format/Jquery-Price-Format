@@ -98,7 +98,7 @@
                 var thousandsFormatted = '';
                 var thousandsCount = 0;
 
-                if (allowEmpty && (str == "" | str == undefined)) {
+                if (allowEmpty && (str == undefined | str.trim() == "")) {
                     return "";
                 }
                 // Checking CentsLimit
