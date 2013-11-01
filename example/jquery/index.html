@@ -67,6 +67,11 @@
                     limit: false,
                     decimalLimit: false
                 });
+				
+				$('#example10').priceFormat({
+					prefix: 'Rs.',
+                    useLakhs: true
+                });
 
             });
 
@@ -123,6 +128,11 @@
 		<p>
 			Working with limits set to zero
 			<input type="text" value="1234.56" id="example9" name="example9">
+		</p>
+		
+		<p>
+			Using the Lakhs limit
+			<input type="text" value="12345678.90" id="example10" name="example10">
 		</p>
 
     </body>
