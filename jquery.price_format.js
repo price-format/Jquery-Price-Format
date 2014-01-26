@@ -45,10 +45,16 @@
 
 		return this.each(function()
 		{
-
 			// pre defined options
 			var obj = $(this);
+			var value = '';
 			var is_number = /[0-9]/;
+
+			// Check if is an input
+			if(obj.is('input'))
+				value = obj.val();
+			else
+				value = obj.html();
 
 			// load the pluggings settings
 			var prefix = options.prefix;
@@ -65,6 +71,24 @@
 			
 			// If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
 			if (insertPlusSign) allowNegative = true;
+
+			function set(nvalue)
+			{
+				if(obj.is('input'))
+					obj.val(nvalue);
+				else
+					obj.html(nvalue);
+			}
+			
+			function get()
+			{
+				if(obj.is('input'))
+					value = obj.val();
+				else
+					value = obj.html();
+					
+				return value;
+			}
 
 			// skip everything that isn't a number
 			// and also skip the left zeroes
@@ -171,7 +195,7 @@
 				var code = (e.keyCode ? e.keyCode : e.which);
 				var typed = String.fromCharCode(code);
 				var functional = false;
-				var str = obj.val();
+				var str = value;
 				var newValue = price_format(str+typed);
 
 				// allow key numbers, 0 to 9
@@ -193,31 +217,29 @@
 					
 					e.preventDefault();
 					e.stopPropagation();
-					if (str!=newValue) obj.val(newValue);
+					if (str!=newValue) set(newValue);
 				}
 
 			}
 
-			// inster formatted price as a value of an input field
+			// Formatted price as a value
 			function price_it ()
 			{
-				var str = obj.val();
+				var str = get();
 				var price = price_format(str);
-				if (str != price) obj.val(price);
-				if(parseFloat(str) == 0.0 && clearOnEmpty) obj.val('');
+				if (str != price) set(price);
+				if(parseFloat(str) == 0.0 && clearOnEmpty) set('');
 			}
 
 			// Add prefix on focus
 			function add_prefix()
 			{
-				var val = obj.val();
-				obj.val(prefix + val);
+				obj.val(prefix + get());
 			}
             
             function add_suffix()
 			{
-				var val = obj.val();
-				obj.val(val + suffix);
+				obj.val(get() + suffix);
 			}
 
 			// Clear prefix on blur if is set to true
@@ -225,8 +247,8 @@
 			{
 				if($.trim(prefix) != '' && clearPrefix)
 				{
-					var array = obj.val().split(prefix);
-					obj.val(array[1]);
+					var array = get().split(prefix);
+					set(array[1]);
 				}
 			}
             
@@ -235,25 +257,25 @@
 			{
 				if($.trim(suffix) != '' && clearSuffix)
 				{
-					var array = obj.val().split(suffix);
-					obj.val(array[0]);
+					var array = get().split(suffix);
+					set(array[0]);
 				}
 			}
 
 			// bind the actions
-			$(this).bind('keydown.price_format', key_check);
-			$(this).bind('keyup.price_format', price_it);
-			$(this).bind('focusout.price_format', price_it);
+			obj.bind('keydown.price_format', key_check);
+			obj.bind('keyup.price_format', price_it);
+			obj.bind('focusout.price_format', price_it);
 
 			// Clear Prefix and Add Prefix
 			if(clearPrefix)
 			{
-				$(this).bind('focusout.price_format', function()
+				obj.bind('focusout.price_format', function()
 				{
 					clear_prefix();
 				});
 
-				$(this).bind('focusin.price_format', function()
+				obj.bind('focusin.price_format', function()
 				{
 					add_prefix();
 				});
@@ -262,19 +284,19 @@
 			// Clear Suffix and Add Suffix
 			if(clearSuffix)
 			{
-				$(this).bind('focusout.price_format', function()
+				obj.bind('focusout.price_format', function()
 				{
                     clear_suffix();
 				});
 
-				$(this).bind('focusin.price_format', function()
+				obj.bind('focusin.price_format', function()
 				{
                     add_suffix();
 				});
 			}
 
 			// If value has content
-			if ($(this).val().length>0)
+			if (get().length>0)
 			{
 				price_it();
 				clear_prefix();
@@ -297,8 +319,13 @@
     *******************/
     $.fn.unmask = function(){
 
-        var field = $(this).val();
-        var result = "";
+        var field;
+		var result = "";
+		
+		if($(this).is('input'))
+			field = $(this).val();
+		else
+			field = $(this).html();
 
         for(var f in field)
         {
