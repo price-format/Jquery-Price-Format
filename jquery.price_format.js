@@ -1,20 +1,10 @@
 /*
 
 * Price Format jQuery Plugin
-* Created By Eduardo Cuducos cuducos [at] gmail [dot] com
+* Created By Eduardo Cuducos
 * Currently maintained by Flavio Silveira flavio [at] gmail [dot] com
-* Version: 1.7
-* Release: 2012-02-22
-
-* original char limit by Flavio Silveira <http://flaviosilveira.com>
-* original keydown event attachment by Kaihua Qi
-* keydown fixes by Thasmo <http://thasmo.com>
-* Clear Prefix on Blur suggest by Ricardo Mendes from PhonoWay
-* original allow negative by Cagdas Ucar <http://carsinia.com>
-* keypad fixes by Carlos Vinicius <http://www.kvinicius.com.br> and Rayron Victor
-* original Suffix by Marlon Pires Junior
-* CentsLimit set to zero fixed by Jereon de Jong
-* original idea for the use of the plus sign
+* Version: 2.0
+* Release: 2014-01-26
 
 */
 
