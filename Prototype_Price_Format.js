@@ -98,7 +98,7 @@ toNumbers : function(str) {
 },
 
 priceFormat : function(str, ignore) {
-	if(!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty) {
+	if(!ignore && (str === '' || str == this.priceFormat('0', true)) && clearOnEmpty) {
 
 		return '';
 	}
