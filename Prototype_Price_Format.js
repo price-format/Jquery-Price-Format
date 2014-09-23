@@ -49,12 +49,14 @@ keyCheck : function(e) {
 	if ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))
 		functional = true;
 
-	// check Backspace, Tab, Enter, Delete, and left/right arrows
+	// check Backspace, Tab, Enter, Delete, Ctrl+V and left/right arrows
 	if (code == 8)
 		functional = true;
 	if (code == 9)
 		functional = true;
 	if (code == 13)
+		functional = true;
+	if (code == 17)
 		functional = true;
 	if (code == 46)
 		functional = true;
@@ -65,6 +67,8 @@ keyCheck : function(e) {
 	if (code == 37)
 		functional = true;
 	if (code == 39)
+		functional = true;
+	if (code == 86)
 		functional = true;
 	if (this.allowNegative && (code == 189 || code == 109))
 		functional = true; // dash as well
