@@ -33,6 +33,13 @@
 
 		var options = $.extend(defaults, options);
 
+                // detect is ctrl is pressed
+                window.ctrl_down = false
+		$(window).bind('keyup keydown', function (e) {
+                    window.ctrl_down = e.ctrlKey;
+                    return true;
+                });
+
 		return this.each(function()
 		{
 			// pre defined options
@@ -58,8 +65,8 @@
 			var allowNegative = options.allowNegative;
 			var insertPlusSign = options.insertPlusSign;
 			var clearOnEmpty = options.clearOnEmpty;
-			
-			// If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
+	
+                        // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
 			if (insertPlusSign) allowNegative = true;
 
 			function set(nvalue)
@@ -199,9 +206,23 @@
 				if (code == 46) functional = true;
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
-				if (code == 86) functional = true;
-				
-				// Minus Sign, Plus Sign
+	
+				// allow Ctrl shortcuts (copy, paste etc.)
+                                if (window.ctrl_down)
+                                {
+                                        if (code == 86) functional = true; // v: paste
+                                        if (code == 67) functional = true; // c: copy
+                                        if (code == 88) functional = true; // x: cut
+                                        if (code == 82) functional = true; // r: reload
+                                        if (code == 84) functional = true; // t: new tab
+                                        if (code == 76) functional = true; // l: URL bar
+                                        if (code == 87) functional = true; // w: close window/tab
+                                        if (code == 81) functional = true; // q: quit
+                                        if (code == 78) functional = true; // n: new window/tab
+                                        if (code == 65) functional = true; // a: select all
+                                }
+
+                                // Minus Sign, Plus Sign
 				if (allowNegative && (code == 189 || code == 109 || code == 173)) functional = true;
 				if (insertPlusSign && (code == 187 || code == 107 || code == 61)) functional = true;
 				
@@ -214,7 +235,7 @@
 
 			}
 
-			// Formatted price as a value
+                        // Formatted price as a value
 			function price_it ()
 			{
 				var str = get();
@@ -256,7 +277,7 @@
 
 			// bind the actions
 			obj.bind('keydown.price_format', key_check);
-			obj.bind('keyup.price_format', price_it);
+                        obj.bind('keyup.price_format', price_it);
 			obj.bind('focusout.price_format', price_it);
 
 			// Clear Prefix and Add Prefix
