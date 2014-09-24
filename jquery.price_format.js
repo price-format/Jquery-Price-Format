@@ -198,7 +198,7 @@
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
 				
-				// check Backspace, Tab, Enter, Delete, Ctrl+V, and left/right arrows
+				// check Backspace, Tab, Enter, Delete and left/right arrows
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
 				if (code == 13) functional = true;
