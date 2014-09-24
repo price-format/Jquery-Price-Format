@@ -19,13 +19,13 @@
 		var defaults =
 		{
 			prefix: 'US$ ',
-            suffix: '',
+                        suffix: '',
 			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
 			clearPrefix: false,
-            clearSufix: false,
+                        clearSufix: false,
 			allowNegative: false,
 			insertPlusSign: false,
 			clearOnEmpty:false
@@ -48,13 +48,13 @@
 
 			// load the pluggings settings
 			var prefix = options.prefix;
-            var suffix = options.suffix;
+                        var suffix = options.suffix;
 			var centsSeparator = options.centsSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
 			var clearPrefix = options.clearPrefix;
-            var clearSuffix = options.clearSuffix;
+                        var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
 			var insertPlusSign = options.insertPlusSign;
 			var clearOnEmpty = options.clearOnEmpty;
@@ -173,7 +173,7 @@
 				// apply the prefix
 				if (prefix) formatted = prefix+formatted;
                 
-                // apply the suffix
+                                // apply the suffix
 				if (suffix) formatted = formatted+suffix;
 
 				return formatted;
@@ -207,7 +207,6 @@
 				
 				if (!functional)
 				{
-					
 					e.preventDefault();
 					e.stopPropagation();
 					if (str!=newValue) set(newValue);
@@ -230,7 +229,7 @@
 				obj.val(prefix + get());
 			}
             
-            function add_suffix()
+                        function add_suffix()
 			{
 				obj.val(get() + suffix);
 			}
@@ -245,7 +244,7 @@
 				}
 			}
             
-            // Clear suffix on blur if is set to true
+                        // Clear suffix on blur if is set to true
 			function clear_suffix()
 			{
 				if($.trim(suffix) != '' && clearSuffix)
@@ -279,12 +278,12 @@
 			{
 				obj.bind('focusout.price_format', function()
 				{
-                    clear_suffix();
+                                    clear_suffix();
 				});
 
 				obj.bind('focusin.price_format', function()
 				{
-                    add_suffix();
+                                    add_suffix();
 				});
 			}
 
@@ -293,7 +292,7 @@
 			{
 				price_it();
 				clear_prefix();
-                clear_suffix();
+                                clear_suffix();
 			}
 
 		});
@@ -301,24 +300,24 @@
 	};
 	
 	/**********************
-    * Remove price format *
-    ***********************/
-    $.fn.unpriceFormat = function(){
-      return $(this).unbind(".price_format");
-    };
+        * Remove price format *
+        ***********************/
+        $.fn.unpriceFormat = function(){
+            return $(this).unbind(".price_format");
+        };
 
-    /******************
-    * Unmask Function *
-    *******************/
-    $.fn.unmask = function(){
+        /******************
+        * Unmask Function *
+        *******************/
+        $.fn.unmask = function(){
 
         var field;
-		var result = "";
+	var result = "";
 		
-		if($(this).is('input'))
-			field = $(this).val();
-		else
-			field = $(this).html();
+        if($(this).is('input'))
+            field = $(this).val();
+        else
+            field = $(this).html();
 
         for(var f in field)
         {
