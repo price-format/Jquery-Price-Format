@@ -25,7 +25,7 @@
 		parse: function (selector) {
 			var $selector = $(selector)
 
-			$selector.find("[data-priceformat=True]").each(function () {
+			$selector.find("[data-priceformat=true], [data-priceformat=True]").each(function () {
 				$jQpft.unobtrusive.parseElement(this)
 			})
 		}
