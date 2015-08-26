@@ -64,10 +64,12 @@
 
 			function set(nvalue)
 			{
-				if(obj.is('input'))
+				if(obj.is('input')){
 					obj.val(nvalue);
-				else
+					obj.trigger('pricechange');
+				}else{
 					obj.html(nvalue);
+				}
 			}
 			
 			function get()
