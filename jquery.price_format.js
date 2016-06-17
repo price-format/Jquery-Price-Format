@@ -19,19 +19,26 @@
 		var defaults =
 		{
 			prefix: 'US$ ',
-            suffix: '',
+                        suffix: '',
 			centsSeparator: '.',
 			thousandsSeparator: ',',
 			limit: false,
 			centsLimit: 2,
 			clearPrefix: false,
-            clearSufix: false,
+                        clearSufix: false,
 			allowNegative: false,
 			insertPlusSign: false,
 			clearOnEmpty:false
 		};
 
 		var options = $.extend(defaults, options);
+
+                // detect is ctrl is pressed
+                window.ctrl_down = false
+		$(window).bind('keyup keydown', function (e) {
+                    window.ctrl_down = e.ctrlKey;
+                    return true;
+                });
 
 		return this.each(function()
 		{
@@ -48,18 +55,18 @@
 
 			// load the pluggings settings
 			var prefix = options.prefix;
-            var suffix = options.suffix;
+                        var suffix = options.suffix;
 			var centsSeparator = options.centsSeparator;
 			var thousandsSeparator = options.thousandsSeparator;
 			var limit = options.limit;
 			var centsLimit = options.centsLimit;
 			var clearPrefix = options.clearPrefix;
-            var clearSuffix = options.clearSuffix;
+                        var clearSuffix = options.clearSuffix;
 			var allowNegative = options.allowNegative;
 			var insertPlusSign = options.insertPlusSign;
 			var clearOnEmpty = options.clearOnEmpty;
-			
-			// If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
+	
+                        // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
 			if (insertPlusSign) allowNegative = true;
 
 			function set(nvalue)
@@ -173,7 +180,7 @@
 				// apply the prefix
 				if (prefix) formatted = prefix+formatted;
                 
-                // apply the suffix
+                                // apply the suffix
 				if (suffix) formatted = formatted+suffix;
 
 				return formatted;
@@ -191,20 +198,36 @@
 				// allow key numbers, 0 to 9
 				if((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) functional = true;
 				
-				// check Backspace, Tab, Enter, Delete, and left/right arrows
+				// check Backspace, Tab, Enter, Delete and left/right arrows
 				if (code ==  8) functional = true;
 				if (code ==  9) functional = true;
 				if (code == 13) functional = true;
+				if (code == 17) functional = true;
 				if (code == 46) functional = true;
 				if (code == 37) functional = true;
 				if (code == 39) functional = true;
-				// Minus Sign, Plus Sign
+	
+				// allow Ctrl shortcuts (copy, paste etc.)
+                                if (window.ctrl_down)
+                                {
+                                        if (code == 86) functional = true; // v: paste
+                                        if (code == 67) functional = true; // c: copy
+                                        if (code == 88) functional = true; // x: cut
+                                        if (code == 82) functional = true; // r: reload
+                                        if (code == 84) functional = true; // t: new tab
+                                        if (code == 76) functional = true; // l: URL bar
+                                        if (code == 87) functional = true; // w: close window/tab
+                                        if (code == 81) functional = true; // q: quit
+                                        if (code == 78) functional = true; // n: new window/tab
+                                        if (code == 65) functional = true; // a: select all
+                                }
+
+                                // Minus Sign, Plus Sign
 				if (allowNegative && (code == 189 || code == 109 || code == 173)) functional = true;
 				if (insertPlusSign && (code == 187 || code == 107 || code == 61)) functional = true;
 				
 				if (!functional)
 				{
-					
 					e.preventDefault();
 					e.stopPropagation();
 					if (str!=newValue) set(newValue);
@@ -212,7 +235,7 @@
 
 			}
 
-			// Formatted price as a value
+                        // Formatted price as a value
 			function price_it ()
 			{
 				var str = get();
@@ -227,7 +250,7 @@
 				obj.val(prefix + get());
 			}
             
-            function add_suffix()
+                        function add_suffix()
 			{
 				obj.val(get() + suffix);
 			}
@@ -242,7 +265,7 @@
 				}
 			}
             
-            // Clear suffix on blur if is set to true
+                        // Clear suffix on blur if is set to true
 			function clear_suffix()
 			{
 				if($.trim(suffix) != '' && clearSuffix)
@@ -254,7 +277,7 @@
 
 			// bind the actions
 			obj.bind('keydown.price_format', key_check);
-			obj.bind('keyup.price_format', price_it);
+                        obj.bind('keyup.price_format', price_it);
 			obj.bind('focusout.price_format', price_it);
 
 			// Clear Prefix and Add Prefix
@@ -276,12 +299,12 @@
 			{
 				obj.bind('focusout.price_format', function()
 				{
-                    clear_suffix();
+                                    clear_suffix();
 				});
 
 				obj.bind('focusin.price_format', function()
 				{
-                    add_suffix();
+                                    add_suffix();
 				});
 			}
 
@@ -290,7 +313,7 @@
 			{
 				price_it();
 				clear_prefix();
-                clear_suffix();
+                                clear_suffix();
 			}
 
 		});
@@ -298,24 +321,24 @@
 	};
 	
 	/**********************
-    * Remove price format *
-    ***********************/
-    $.fn.unpriceFormat = function(){
-      return $(this).unbind(".price_format");
-    };
+        * Remove price format *
+        ***********************/
+        $.fn.unpriceFormat = function(){
+            return $(this).unbind(".price_format");
+        };
 
-    /******************
-    * Unmask Function *
-    *******************/
-    $.fn.unmask = function(){
+        /******************
+        * Unmask Function *
+        *******************/
+        $.fn.unmask = function(){
 
         var field;
-		var result = "";
+	var result = "";
 		
-		if($(this).is('input'))
-			field = $(this).val();
-		else
-			field = $(this).html();
+        if($(this).is('input'))
+            field = $(this).val();
+        else
+            field = $(this).html();
 
         for(var f in field)
         {
