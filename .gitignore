@@ -36,3 +36,7 @@ Thumbs.db
 # Vim generated files #
 # #####################
 *.swp
+
+# Node Modules #
+################
+node_modules/.

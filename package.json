@@ -1,0 +1,7 @@
+{
+  "name": "jquery-price-format",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-minify": "0.0.12"
+  }
+}
