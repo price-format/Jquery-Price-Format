@@ -5,16 +5,19 @@
     "keywords": [
         "price",
         "money",
-		"currency"
+		"currency",
+        "number",
+        "format",
+        "mask"
     ],
-    "version": "2.0.1",
+    "version": "2.1",
     "author": {
         "name": "Eduardo Cuducos",
         "url": "http://about.me/cuducos"
     },
-    "maintainers": [
+    "maintainer": [
         {
-            "name": "Flavio Silveira",
+            "name": "Flávio Silveira",
             "email": "flavioaugustosilveira@gmail.com",
             "url": "http://flaviosilveira.com"
         }
@@ -28,7 +31,7 @@
     "bugs": "https://github.com/flaviosilveira/Jquery-Price-Format/issues",
     "homepage": "https://jquerypriceformat.com",
     "docs": "https://jquerypriceformat.com",
-    "download": "https://jquerypriceformat.com",
+    "download": "https://github.com/flaviosilveira/Jquery-Price-Format/releases",
     "dependencies": {
         "jquery": ">=1.5"
     }
