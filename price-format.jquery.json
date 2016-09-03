@@ -21,8 +21,8 @@
     ],
     "licenses": [
         {
-            "type": "CDDL-1.0",
-            "url": "http://opensource.org/licenses/CDDL-1.0"
+            "type": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
         }
     ],
     "bugs": "https://github.com/flaviosilveira/Jquery-Price-Format/issues",
