@@ -1,59 +1,58 @@
 <html>
     
     <head>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script type="text/javascript" src="../../jquery.price_format.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="../../jquery.priceformat.js"></script>
         <script type="text/javascript">
 
             $(function(){
 
+            	// Example 1
                 $('#example1').priceFormat();
 
+                // Example 2
                 $('#example2').priceFormat({
                     prefix: 'R$ ',
                     centsSeparator: ',',
                     thousandsSeparator: '.'
                 });
 
+                // Example 3
                 $('#example3').priceFormat({
                     prefix: '',
                     thousandsSeparator: '',
 					clearOnEmpty: true
                 });
 
+                // Example 4
                 $('#example4').priceFormat({
                     limit: 2,
                     centsLimit: 1
                 });
 
+                // Example 5
                 $('#example5').priceFormat({
                     clearPrefix: true
                 });
 
+                // Example 6
                 $('#example6').priceFormat({
                     allowNegative: true
                 });
 
+                $("#unmask-test").click(function(){
+					alert($('#example6').unmask());
+				});
+
+                // Example 7
 				$('#example7').priceFormat({
 					prefix: 'R$',
                     suffix: '$$',
 					clearSuffix: true,
 					clearPrefix: true
                 });
-				
-                $('#example8').priceFormat({
-                    prefix: '',
-                    thousandsSeparator: '',
-					insertPlusSign: true
-                });
-				
-				$('#example9').priceFormat();
 
-				$("#unmask-test").click(function(){
-					alert($('#example6').unmask());
-				});
-				
-				$("#unprice-test").click(function(){
+                $("#unprice-test").click(function(){
 					$('#example7').unpriceFormat();
 				});
 				
@@ -66,6 +65,24 @@
 	                });
 				});
 				
+				// Example 8
+				$('#example8').priceFormat({
+					prefix: 'R$ ',
+					allowNegative: true
+				});
+
+				$("#float-test").click(function(){
+					alert($('#example8').priceToFloat());
+				});
+
+				// Example 9
+                $('#example9').priceFormat({
+                    prefix: '',
+                    thousandsSeparator: '',
+					insertPlusSign: true
+                });
+				
+				// Example 10
 				$('#htmlfield').priceFormat({
                     prefix: 'R$ ',
                     centsSeparator: ',',
@@ -83,51 +100,55 @@
         <h1>JQuery Price Format Examples</h1>
 
 		<p>
-			Basic usage
+			1 - Basic usage
 			<input type="text" value="" id="example1" name="example1">
 		</p>
         
 		<p>
-			Customize
+			2 - Customize
 			<input type="text" value="123456" id="example2" name="example2">
 		</p>
 		
         <p>
-			Skipping some option and Cleanup on Empty
+			3 - Skipping some option and Cleanup on Empty
 			<input type="text" value="123456" id="example3" name="example3">
 		</p>
 		
         <p>
-			Working with limits
+			4 - Working with limits
 			<input type="text" value="123456" id="example4" name="example4">
 		</p>
 		
         <p>
-			Clear Prefix and Suffix on Blur
+			5 - Clear Prefix and Suffix on Blur
 			<input type="text" value="123456" id="example5" name="example5">
 		</p>
 		
         <p>
-			Allow Negatives and Unmask function
+			6 - Allow Negatives and Unmask function
 			<input type="text" value="-123456" id="example6" name="example6">
-			<button id="unmask-test">Return Value Unmask</button>
+			<button id="unmask-test">Alert Value Unmask</button>
 		</p>
 		
 		<p>
-			Add Suffix
+			7 - Add Suffix
 			<input type="text" value="123456" id="example7" name="example7">
 			<button id="unprice-test">Unprice Format</button>
 			<button id="price-test">Price Format</button>
 		</p>
-		
-        <p>
-			Using the plus sign
-			<input type="text" value="123456" id="example8" name="example8">
+
+		<p>
+			8 - To Float
+			<input type="text" value="-123456" id="example8" name="example8">
+			<button id="float-test">Alert Float value</button>
 		</p>
 
-		<h4 id="htmlfield">
-			1234567
-		</h4>
+        <p>
+			9 - Using the plus sign
+			<input type="text" value="123456" id="example9" name="example9">
+		</p>
+
+		<h4>10 - <span id="htmlfield">1234567</span></h4>
 
     </body>
     
