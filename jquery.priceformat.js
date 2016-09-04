@@ -10,22 +10,7 @@
    *****************/
   $.fn.priceFormat = function(options) {
 
-    var defaults = {
-      prefix: 'US$ ',
-      suffix: '',
-      centsSeparator: '.',
-      thousandsSeparator: ',',
-      limit: false,
-      centsLimit: 2,
-      clearPrefix: false,
-      clearSufix: false,
-      allowNegative: false,
-      insertPlusSign: false,
-      clearOnEmpty: false,
-      leadingZero: true
-    };
-
-    var options = $.extend(defaults, options);
+    var options = $.extend(true, {}, $.fn.priceFormat.defaults, options);
 
     // detect if ctrl is pressed
     window.ctrl_down = false
@@ -326,13 +311,32 @@
    * Price to Float *
    ******************/
   $.fn.priceToFloat = function() {
-    // valor = $(this).val();
-    // valor = valor.replace(options.prefix, '');
-    // valor = valor.replace(options.sufix, '');
-    // valor = valor.replace(options.thousandsSeparator, '');
-    // valor = valor.replace(options.centsSeparator, '.');
 
-    return parseFloat($(this).val());
+    if ($(this).is('input'))
+      field = $(this).val() || [];
+    else
+      field = $(this).html();
+    
+    // Manter o negativo
+    return parseFloat(field.replace(/[^0-9\-\.]/g, ''));
+  };
+
+  /************
+   * Defaults *
+   ************/
+  $.fn.priceFormat.defaults = {
+    prefix: 'US$ ',
+    suffix: '',
+    centsSeparator: '.',
+    thousandsSeparator: ',',
+    limit: false,
+    centsLimit: 2,
+    clearPrefix: false,
+    clearSufix: false,
+    allowNegative: false,
+    insertPlusSign: false,
+    clearOnEmpty: false,
+    leadingZero: true
   };
 
 })(jQuery);
