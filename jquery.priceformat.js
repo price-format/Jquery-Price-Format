@@ -23,7 +23,6 @@
 
     $(this).bind('keyup keydown', function (e) {
         metaKey = e.metaKey;
-        console.log(e);
         return true;
     });
 
@@ -223,7 +222,7 @@
         var str = get();
         var price = price_format(str);
         if (str != price) set(price);
-        if (parseFloat(str) == 0.0 && clearOnEmpty) set('');
+        if (price == price_format('0', true) && clearOnEmpty) set('');
       }
 
       // Add prefix on focus
