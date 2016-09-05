@@ -222,7 +222,8 @@
         var str = get();
         var price = price_format(str);
         if (str != price) set(price);
-        if (price == price_format('0', true) && clearOnEmpty) set('');
+        var format = price_format('0', true);
+        if (price == format && str != '0' && clearOnEmpty) set('');
       }
 
       // Add prefix on focus
@@ -324,8 +325,7 @@
       field = $(this).val() || [];
     else
       field = $(this).html();
-    
-    // Manter o negativo
+
     return parseFloat(field.replace(/[^0-9\-\.]/g, ''));
   };
 
