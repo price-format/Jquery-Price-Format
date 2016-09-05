@@ -12,10 +12,18 @@
 
     var options = $.extend(true, {}, $.fn.priceFormat.defaults, options);
 
-    // detect if ctrl is pressed
+    // detect if ctrl or metaKey(Mac) is pressed
     window.ctrl_down = false
+    metaKey = false
+    
     $(window).bind('keyup keydown', function (e) {
         window.ctrl_down = e.ctrlKey;
+        return true;
+    });
+
+    $(this).bind('keyup keydown', function (e) {
+        metaKey = e.metaKey;
+        console.log(e);
         return true;
     });
 
@@ -189,7 +197,7 @@
         if (code >= 44 && code <= 46) functional = true;
 
         // allow Ctrl shortcuts (copy, paste etc.)
-        if (window.ctrl_down){
+        if (window.ctrl_down || metaKey){
           if (code == 86) functional = true; // v: paste
           if (code == 67) functional = true; // c: copy
           if (code == 88) functional = true; // x: cut
