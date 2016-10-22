@@ -1,4 +1,6 @@
 #Jquery-Price-Format
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)]()
 
 jQuery Price Format Plugin is useful to format input fields and HTML elements as prices. 
 For example, if you type 123456, the plugin updates it to US$ 1,234.56.
