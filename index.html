@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Jquery-price-format by flaviosilveira</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Jquery-price-format</h1>
+        <h2>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices.  For example, if you type 123456, the plugin updates it to US$ 1,234.56.</h2>
+        <a href="https://github.com/flaviosilveira/Jquery-Price-Format" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="jquery-price-format" class="anchor" href="#jquery-price-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jquery-Price-Format</h1>
+
+<p>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices. 
+For example, if you type 123456, the plugin updates it to US$ 1,234.56.</p>
+
+<p>Yes, we also have a prototype version but it is out of maintenace.</p>
+
+<p>It is costumizable, so you can use other prefixes, separators, suffixes, plus sign, minus sign and so on. Check out the examples below.</p>
+
+<h3>
+<a id="example-1---basic-usage" class="anchor" href="#example-1---basic-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 1 - Basic Usage</h3>
+
+<p>This is the most basic usage. It loads default options: use US$ as prefix, a comma as thousands separator and a dot as cents separator.</p>
+
+<pre><code>$('#example1').priceFormat();
+
+// US$ 1,234.56
+</code></pre>
+
+<h3>
+<a id="example-2---use-with-any-html-element" class="anchor" href="#example-2---use-with-any-html-element" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 2 - Use with any HTML element</h3>
+
+<p>The same basic usage as above, but now using an HTML id. Try it with classes also.</p>
+
+<pre><code>$('#htmlfield').priceFormat();
+</code></pre>
+
+<h3>
+<a id="example-3---customize" class="anchor" href="#example-3---customize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 3 - Customize</h3>
+
+<p>This is a costumized format like brazilians use: R$ as prefix, a dot as cents separator and a dot as thousands separator. Play with the options centsSeparator and/or thousandsSeparator to better fit your site.</p>
+
+<pre><code>$('#example2').priceFormat({
+  prefix: 'R$ ',
+  centsSeparator: ',',
+  thousandsSeparator: '.'
+});
+
+// R$ 1.234,56
+</code></pre>
+
+<h3>
+<a id="example-4---skipping-some-option" class="anchor" href="#example-4---skipping-some-option" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 4 - Skipping some option</h3>
+
+<p>You can skip some of the options (prefix, centsSeparator and/or thousandsSeparator) by set them blank as you need it in your UI.</p>
+
+<pre><code>$('#example3').priceFormat({
+    prefix: '',
+    thousandsSeparator: ''
+});
+
+// 1234.56
+</code></pre>
+
+<h3>
+<a id="example-5---working-with-limits" class="anchor" href="#example-5---working-with-limits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 5 - Working with limits</h3>
+
+<p>You can set a limited length (limit) or change the size of the cents field (centsLimit) to better fit your needs.</p>
+
+<pre><code>$('#example5').priceFormat({
+  clearPrefix: true
+});
+
+// US$ 12.345
+</code></pre>
+
+<h3>
+<a id="example-6---clear-prefix-and-suffix-on-blur" class="anchor" href="#example-6---clear-prefix-and-suffix-on-blur" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 6 - Clear Prefix and Suffix on Blur</h3>
+
+<p>The default value of clearPrefix and clearSuffix is false. Both work in same way.</p>
+
+<pre><code>$('#example5').priceFormat({
+  clearPrefix: true
+});
+
+// 1,234.56
+// on Blur &gt; US$ 1,234.56
+</code></pre>
+
+<h3>
+<a id="example-7---allow-negatives" class="anchor" href="#example-7---allow-negatives" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 7 - Allow Negatives</h3>
+
+<p>The default value of allowNegative property is false. Zero values will not be negative.</p>
+
+<pre><code>$('#example6').priceFormat({
+  allowNegative: true
+});
+
+// US$ -1,234.56
+</code></pre>
+
+<h3>
+<a id="example-8---add-suffix" class="anchor" href="#example-8---add-suffix" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example 8 - Add Suffix</h3>
+
+<p>The default value of suffix is empty.</p>
+
+<pre><code>$('#example7').priceFormat({
+  prefix: '',
+  suffix: '€'
+});
+
+// 1,234.56€
+</code></pre>
+
+<h3>
+<a id="exemplo-9---unmask-function" class="anchor" href="#exemplo-9---unmask-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplo 9 - Unmask function</h3>
+
+<p>Return the value without mask. Negative numbers will return the minus signal.</p>
+
+<pre><code>$('#example8').priceFormat();
+var unmask = $('#example8').unmask();
+alert(unmask); // alert 123456
+</code></pre>
+
+<h3>
+<a id="exemplo-10---plus-sign" class="anchor" href="#exemplo-10---plus-sign" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplo 10 - Plus sign</h3>
+
+<p>Sometimes show the plus sign can improve your usability. Since you allow this option you will automaticly allow the use of the minus sign.</p>
+
+<pre><code>$('#example9').priceFormat({
+  prefix: '',
+  thousandsSeparator: '',
+  insertPlusSign: 'true'
+});
+
+// +1234.56
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/flaviosilveira/Jquery-Price-Format/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/flaviosilveira/Jquery-Price-Format/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/flaviosilveira/Jquery-Price-Format"></a> is maintained by <a href="https://github.com/flaviosilveira">flaviosilveira</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
