@@ -1,5 +1,7 @@
 #Jquery-Price-Format
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
+[![license](https://img.shields.io/github/license/flaviosilveira/Jquery-Price-Format.svg)](https://github.com/flaviosilveira/Jquery-Price-Format/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/flaviosilveira/Jquery-Price-Format.svg)](https://github.com/flaviosilveira/Jquery-Price-Format/issues)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e3d85321e8741d194d1fcf993dc0352)](https://www.codacy.com/app/flavioaugustosilveira/Jquery-Price-Format?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=flaviosilveira/Jquery-Price-Format&amp;utm_campaign=Badge_Grade)
 
 jQuery Price Format Plugin is useful to format input fields and HTML elements as prices. 
 For example, if you type 123456, the plugin updates it to US$ 1,234.56.
