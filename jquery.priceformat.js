@@ -3,7 +3,16 @@
 * Created By Eduardo Cuducos
 * Currently maintained by Flavio Silveira flavio [at] gmail [dot] com
 */
-(function($) {
+
+(function (factory) {
+  if (typeof define === "function" && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports !== 'undefined') {
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+} (function($) {
 
   /****************
    * Main Function *
@@ -347,4 +356,4 @@
     leadingZero: true
   };
 
-})(jQuery);
+}));
