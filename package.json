@@ -1,7 +1,10 @@
 {
   "name": "jquery-price-format",
   "devDependencies": {
+    "browser-sync": "^2.18.6",
     "gulp": "^3.9.1",
-    "gulp-minify": "0.0.12"
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-minify": "0.0.12",
+    "gulp-size": "^2.1.0"
   }
 }
