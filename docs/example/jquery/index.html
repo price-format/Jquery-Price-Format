@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>JQuery Price Format Examples</title>
+        <link href="//fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../../stylesheets/stylesheet.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="../../stylesheets/github-light.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="../../stylesheets/print.css" media="print">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="../../javascripts/jquery.priceformat.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                // Example 1
+                $('#example1').priceFormat();
+
+                // Example 2
+                $('#example2').priceFormat({
+                    prefix: 'R$ ',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.'
+                });
+
+                // Example 3
+                $('#example3').priceFormat({
+                    prefix: '',
+                    thousandsSeparator: '',
+                    clearOnEmpty: true
+                });
+
+                // Example 4
+                $('#example4').priceFormat({
+                    limit: 2,
+                    centsLimit: 1
+                });
+
+                // Example 5
+                $('#example5').priceFormat({
+                    clearPrefix: true
+                });
+
+                // Example 6
+                $('#example6').priceFormat({
+                    allowNegative: true
+                });
+
+                $("#unmask-test").click(function() {
+                    alert($('#example6').unmask());
+                });
+
+                // Example 7
+                $('#example7').priceFormat({
+                    prefix: 'R$',
+                    suffix: '$$',
+                    clearSuffix: true,
+                    clearPrefix: true
+                });
+
+                $("#unprice-test").click(function() {
+                    $('#example7').unpriceFormat();
+                });
+
+                $("#price-test").click(function() {
+                    $('#example7').priceFormat({
+                        prefix: 'R$',
+                        suffix: '$$',
+                        clearSuffix: true,
+                        clearPrefix: true
+                    });
+                });
+
+                // Example 8
+                $('#example8').priceFormat({
+                    prefix: 'R$ ',
+                    allowNegative: true
+                });
+
+                $("#float-test").click(function() {
+                    alert($('#example8').priceToFloat());
+                });
+
+                // Example 9
+                $('#example9').priceFormat({
+                    prefix: '',
+                    thousandsSeparator: '',
+                    insertPlusSign: true
+                });
+
+                // Example 10
+                $('#htmlfield').priceFormat({
+                    prefix: 'R$ ',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.',
+                    insertPlusSign: true
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="content-wrapper">
+            <div class="inner clearfix">
+                <section id="main-content">
+                    <h1>JQuery Price Format Examples</h1>
+
+                    <p>
+                        1 - Basic usage
+                        <input type="text" value="" id="example1" name="example1">
+                    </p>
+
+                    <p>
+                        2 - Customize
+                        <input type="text" value="123456" id="example2" name="example2">
+                    </p>
+
+                        <p>
+                        3 - Skipping some option and Cleanup on Empty
+                        <input type="text" value="123456" id="example3" name="example3">
+                    </p>
+
+                        <p>
+                        4 - Working with limits
+                        <input type="text" value="123456" id="example4" name="example4">
+                    </p>
+
+                        <p>
+                        5 - Clear Prefix on Blur
+                        <input type="text" value="123456" id="example5" name="example5">
+                    </p>
+
+                        <p>
+                        6 - Allow Negatives and Unmask function
+                        <input type="text" value="-123456" id="example6" name="example6">
+                        <button id="unmask-test" class="button">Alert Value Unmask</button>
+                    </p>
+
+                    <p>
+                        7 - Add Suffix and Prefix and clean them on blur. Also buttons to unprice and price the input
+                        <input type="text" value="123456" id="example7" name="example7">
+                        <button id="unprice-test" class="button">Unprice Format</button>
+                        <button id="price-test" class="button">Price Format</button>
+                    </p>
+
+                    <p>
+                        8 - To Float
+                        <input type="text" value="-123456" id="example8" name="example8">
+                        <button id="float-test" class="button">Alert Float value</button>
+                    </p>
+
+                        <p>
+                        9 - Using the plus sign
+                        <input type="text" value="123456" id="example9" name="example9">
+                    </p>
+
+                    <h4>10 - Price a span HTML Tag <span id="htmlfield">1234567</span></h4>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

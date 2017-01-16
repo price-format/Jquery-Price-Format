@@ -608,6 +608,23 @@ form {
 
 }
 
+input[type="text"],
+button.button {
+  padding: 0 12px;
+  border-radius: 3px;
+  line-height: 30px;
+  margin: 0 0 5px;
+}
+
+input[type="text"] {
+  border: 1px solid #acacac;
+}
+
+button.button {
+  border: 1px solid #2e7fde;
+  background-color: #2e7fde;
+  color: #fff;
+}
 
 /* GENERAL ELEMENT TYPE STYLES */
 
