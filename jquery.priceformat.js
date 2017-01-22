@@ -224,6 +224,7 @@
         if (str != price) set(price);
         var format = price_format('0', true);
         if (price == format && str != '0' && clearOnEmpty) set('');
+				obj.change();
       }
 
       // Add prefix on focus
