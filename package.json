@@ -3,7 +3,9 @@
   "devDependencies": {
     "browser-sync": "^2.18.6",
     "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
     "gulp-gh-pages": "^0.5.4",
+    "gulp-htmlmin": "^3.0.0",
     "gulp-minify": "0.0.12",
     "gulp-size": "^2.1.0"
   }
