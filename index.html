@@ -1,438 +1,188 @@
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="chrome=1">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <title>Jquery-price-format by flaviosilveira</title>
-      <link href="//fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css" media="screen">
-      <link rel="stylesheet" type="text/css" href="./stylesheets/github-light.css" media="screen">
-      <link rel="stylesheet" type="text/css" href="./stylesheets/print.css" media="print">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-          <script type="text/javascript" src="javascripts/jquery.priceformat.min.js"></script>
-          <script type="text/javascript">
-              $(function() {
-                  // Example 1
-                  $('#example1').priceFormat();
-
-                  // Example 2
-                  $('#example2').priceFormat({
-                      prefix: 'R$ ',
-                      centsSeparator: ',',
-                      thousandsSeparator: '.'
-                  });
-
-                  // Example 3
-                  $('#example3').priceFormat({
-                      prefix: '',
-                      thousandsSeparator: '',
-                      clearOnEmpty: true
-                  });
-
-                  // Example 4
-                  $('#example4').priceFormat({
-                      limit: 2,
-                      centsLimit: 1
-                  });
-
-                  // Example 4
-                  $('#example4-1').priceFormat({
-                      prefix: '',
-                      suffix: '€'
-                  });
-
-                  // Example 5
-                  $('#example5').priceFormat({
-                      clearPrefix: true,
-                      clearSuffix: true,
-                      suffix: '$$'
-                  });
-
-                  // Example 6
-                  $('#example6').priceFormat({
-                      allowNegative: true
-                  });
-
-                  $('#example6-1').priceFormat({
-                      allowNegative: true
-                  });
-
-                  $("#unmask-test").click(function() {
-                      alert($('#example6-1').unmask());
-                  });
-
-                  // Example 7
-                  $('#example7').priceFormat({
-                      prefix: 'R$',
-                      suffix: '$$',
-                      clearSuffix: true,
-                      clearPrefix: true
-                  });
-
-                  // Example 7
-                  $('#example7-1').priceFormat({
-                      prefix: 'R$',
-                      suffix: '$$',
-                      clearSuffix: true,
-                      clearPrefix: true
-                  });
-
-                  $("#unprice-test").click(function() {
-                      $('#example7-1').unpriceFormat();
-                  });
-
-                  $("#price-test").click(function() {
-                      $('#example7-1').priceFormat({
-                          prefix: 'R$',
-                          suffix: '$$',
-                          clearSuffix: true,
-                          clearPrefix: true
-                      });
-                  });
-
-                  // Example 8
-                  $('#example8').priceFormat({
-                      prefix: 'R$ ',
-                      allowNegative: true
-                  });
-
-                  $('#example8-1').priceFormat({
-                      prefix: 'R$ ',
-                      allowNegative: true
-                  });
-
-                  $("#float-test").click(function() {
-                      alert($('#example8-1').priceToFloat());
-                  });
-
-                  // Example 9
-                  $('#example9').priceFormat({
-                      prefix: '',
-                      thousandsSeparator: '',
-                      insertPlusSign: true
-                  });
-
-                  // Example 10
-                  $('#htmlfield').priceFormat({
-                      prefix: 'R$ ',
-                      centsSeparator: ',',
-                      thousandsSeparator: '.',
-                      insertPlusSign: true
-                  });
-              });
-          </script>
-    </head>
-    <body>
-      <header>
-        <div class="inner">
-          <h1>Jquery-price-format</h1>
-          <h2>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices.  For example, if you type 123456, the plugin updates it to US$ 1,234.56.</h2>
-          <a href="https://github.com/flaviosilveira/Jquery-Price-Format" class="button"><small>View project on</small> GitHub</a>
-        </div>
-      </header>
-
-      <div id="content-wrapper">
-        <div class="inner clearfix">
-          <section id="main-content">
-            <h1>
-              <a id="jquery-price-format" class="anchor" href="#jquery-price-format" aria-hidden="true">
-                <span aria-hidden="true" class="octicon octicon-link"></span></a>Jquery-Price-Format</h1>
-
-  <p>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices.
-  For example, if you type 123456, the plugin updates it to US$ 1,234.56.</p>
-
-  <p>Yes, we also have a prototype version but it is out of maintenance.</p>
-
-  <p>It is customizable, so you can use other prefixes, separators, suffixes, plus sign, minus sign and so on. Check out the examples below.</p>
-
-  <h3>
-  <a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Usage</h3>
-
-  <p>This is the most basic usage. It loads default options: use US$ as prefix, a comma as thousands separator and a dot as cents separator.</p>
-
-  <pre>
-    <label for="example1">Try Me!</label>
-      <input type="text" value="" id="example1" name="example1">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat();
-
-        // HTML
-        <input type="text" value="" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="customize" class="anchor" href="#customize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customize</h3>
-
-  <p>This is a costumized format for brazilians use: R$ as prefix, a dot as cents separator and a dot as thousands separator. Play with the options centsSeparator and/or thousandsSeparator to better fit your needs.</p>
-
-  <pre>
-    <label for="example2">Try Me!</label>
-      <input type="text" value="123456" id="example2" name="example2">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          prefix: 'R$ ',
-          centsSeparator: ',',
-          thousandsSeparator: '.'
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="skipping-some-option" class="anchor" href="#skipping-some-option" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Skipping some option</h3>
-
-  <p>You can skip some of the options (prefix, centsSeparator and/or thousandsSeparator) by set them blank as you need. You can also set to empty the field when it is empty.</p>
-
-  <pre>
-    <label for="example3">Try Me!</label>
-      <input type="text" value="123456" id="example3" name="example3">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          prefix: '',
-          thousandsSeparator: '',
-          clearOnEmpty: true
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="working-with-limits" class="anchor" href="#working-with-limits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with limits</h3>
-
-  <p>You can set a limited length (limit) or change the size of the cents field (centsLimit).</p>
-
-  <pre>
-    <label for="example4">Try Me!</label>
-      <input type="text" value="123456" id="example4" name="example4">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          limit: 2,
-          centsLimit: 1
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="working-with-limits" class="anchor" href="#working-with-limits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Suffix</h3>
-
-  <p>The default value of suffix is empty.</p>
-
-  <pre>
-    <label for="example4-1">Try Me!</label>
-      <input type="text" value="123456" id="example4-1" name="example4-1">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          prefix: '',
-          suffix: '€'
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="clear-prefix-and-suffix-on-blur" class="anchor" href="#clear-prefix-and-suffix-on-blur" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clear Prefix and Suffix on Blur</h3>
-
-  <p>The default value of clearPrefix and clearSuffix is false. Both work in same way.</p>
-
-  <pre>
-    <label for="example5">Try Me!</label>
-      <input type="text" value="123456" id="example5" name="example5">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          clearPrefix: true,
-          clearSuffix: true,
-          suffix: '$$'
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="allow-negatives" class="anchor" href="#allow-negatives" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allow Negatives</h3>
-
-  <p>The default value of allowNegative property is false. Zero values will not be negative.</p>
-
-  <pre>
-    <label for="example6">Try Me!</label>
-      <input type="text" value="-123456" id="example6" name="example6">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          allowNegative: true
-        });
-
-        // HTML
-        <input type="text" value="-123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="plus-sign" class="anchor" href="#plus-sign" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plus sign</h3>
-
-  <p>Sometimes show the plus sign can improve your usability. Since you allow this option you will automaticly allow the use of the minus sign.</p>
-
-  <pre>
-    <label for="example9">Try Me!</label>
-      <input type="text" value="123456" id="example9" name="example9">
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          prefix: '',
-          thousandsSeparator: '',
-          insertPlusSign: 'true'
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="unmask-function" class="anchor" href="#unmask-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unmask function</h3>
-
-  <p>Return the value without mask. Negative numbers will return the minus signal.</p>
-
-  <pre>
-    <label for="example6-1">Try Me!</label>
-      <input type="text" value="-123456" id="example6-1" name="example6-1">
-      <button id="unmask-test" class="button">Alert Value Unmask</button>
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-          allowNegative: true
-        });
-
-        $("#button").click(function() {
-          alert($('#element').unmask());
-        });
-
-        // HTML
-        <input type="text" value="-123456" id="element" name="element">
-        <button id="button" class="button">Alert Value Unmask</button>
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="tofloat-function" class="anchor" href="#tofloat-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Price to Float</h3>
-
-  <p>Return the value in float.</p>
-
-  <pre>
-    <label for="example8-1">Try Me!</label>
-      <input type="text" value="-123456" id="example8-1" name="example6-1">
-      <button id="float-test" class="button">Alert Float Value</button>
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-            prefix: 'R$ ',
-            allowNegative: true
-        });
-
-        $("#float").click(function() {
-            alert($('#element').priceToFloat());
-        });
-
-        // HTML
-        <input type="text" value="-123456" id="element" name="element">
-        <button id="button" class="button">Alert Float Value</button>
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="unprice-price" class="anchor" href="#unprice-price" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unprice and Price function</h3>
-
-  <p>You can switch on and off the price format for the elements.</p>
-
-  <pre>
-    <label for="example7-1">Try Me!</label>
-      <input type="text" value="123456" id="example7-1" name="example7-1">
-      <button id="unprice-test" class="button">Unprice Format</button>
-      <button id="price-test" class="button">Price Format</button>
-      <xmp>
-        // JavaScript
-        $('#element').priceFormat({
-            prefix: 'R$',
-            suffix: '$$',
-            clearSuffix: true,
-            clearPrefix: true
-        });
-
-        $("#unprice").click(function() {
-            $('#element').unpriceFormat();
-        });
-
-        $("#price").click(function() {
-            $('#element').priceFormat({
-                prefix: 'R$',
-                suffix: '$$',
-                clearSuffix: true,
-                clearPrefix: true
-            });
-        });
-
-        // HTML
-        <input type="text" value="123456" id="element" name="element">
-        <button id="unprice" class="button">Unprice Format</button>
-        <button id="price" class="button">Price Format</button>
-      </xmp>
-  </pre>
-
-  <h3>
-  <a id="html-element" class="anchor" href="#html-element" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use it with any HTML Element</h3>
-
-  <p>You can and should use it with any HTML element.</p>
-
-  <pre>
-       <span id="htmlfield">123456</span>
-      <xmp>
-        // JavaScript
-        $('#htmlfield').priceFormat({
-            prefix: 'R$ ',
-            centsSeparator: ',',
-            thousandsSeparator: '.',
-            insertPlusSign: true
-        });
-
-        // HTML
-        <span id="htmlfield">123456</span>
-      </xmp>
-  </pre>
-          </section>
-
-          <aside id="sidebar">
-            <a href="https://github.com/flaviosilveira/Jquery-Price-Format/zipball/master" class="button">
-              <small>Download</small>
-              .zip file
-            </a>
-            <a href="https://github.com/flaviosilveira/Jquery-Price-Format/tarball/master" class="button">
-              <small>Download</small>
-              .tar.gz file
-            </a>
-
-            <p class="repo-owner"><a href="https://github.com/flaviosilveira/Jquery-Price-Format"></a> is maintained by <a href="https://github.com/flaviosilveira">flaviosilveira</a>.</p>
-
-            <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-          </aside>
-        </div>
-      </div>
-    </body>
-  </html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Jquery-price-format by flaviosilveira</title><link href="//fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css"><link rel="stylesheet" type="text/css" href="./stylesheets/stylesheet.css" media="screen"><link rel="stylesheet" type="text/css" href="./stylesheets/github-light.css" media="screen"><link rel="stylesheet" type="text/css" href="./stylesheets/print.css" media="print"></head><body><header><div class="inner"><h1>Jquery-price-format</h1><h2>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices. For example, if you type 123456, the plugin updates it to US$ 1,234.56.</h2><a href="https://github.com/flaviosilveira/Jquery-Price-Format" class="button"><small>View project on</small> GitHub</a></div></header><div id="content-wrapper"><div class="inner clearfix"><section id="main-content"><h1><a id="jquery-price-format" class="anchor" href="#jquery-price-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Jquery-Price-Format</h1><p>jQuery Price Format Plugin is useful to format input fields and HTML elements as prices. For example, if you type 123456, the plugin updates it to US$ 1,234.56.</p><p>Yes, we also have a prototype version but it is out of maintenance.</p><p>It is customizable, so you can use other prefixes, separators, suffixes, plus sign, minus sign and so on. Check out the examples below.</p><h3><a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Usage</h3><p>This is the most basic usage. It loads default options: use US$ as prefix, a comma as thousands separator and a dot as cents separator.</p><pre>
+<label for="example1">Try Me!</label>
+<input type="text" value="" id="example1" name="example1">
+<xmp>
+// JavaScript
+$('#element').priceFormat();
+
+// HTML
+<input type="text" value="" id="element" name="element">
+</xmp>
+</pre><h3><a id="customize" class="anchor" href="#customize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customize</h3><p>This is a costumized format for brazilians use: R$ as prefix, a dot as cents separator and a dot as thousands separator. Play with the options centsSeparator and/or thousandsSeparator to better fit your needs.</p><pre>
+<label for="example2">Try Me!</label>
+<input type="text" value="123456" id="example2" name="example2">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: 'R$ ',
+    centsSeparator: ',',
+    thousandsSeparator: '.'
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="skipping-some-option" class="anchor" href="#skipping-some-option" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Skipping some option</h3><p>You can skip some of the options (prefix, centsSeparator and/or thousandsSeparator) by set them blank as you need. You can also set to empty the field when it is empty.</p><pre>
+<label for="example3">Try Me!</label>
+<input type="text" value="123456" id="example3" name="example3">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: '',
+    thousandsSeparator: '',
+    clearOnEmpty: true
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="working-with-limits" class="anchor" href="#working-with-limits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Working with limits</h3><p>You can set a limited length (limit) or change the size of the cents field (centsLimit).</p><pre>
+<label for="example4">Try Me!</label>
+<input type="text" value="123456" id="example4" name="example4">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    limit: 2,
+    centsLimit: 1
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="working-with-limits" class="anchor" href="#working-with-limits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Suffix</h3><p>The default value of suffix is empty.</p><pre>
+<label for="example4-1">Try Me!</label>
+<input type="text" value="123456" id="example4-1" name="example4-1">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: '',
+    suffix: '€'
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="clear-prefix-and-suffix-on-blur" class="anchor" href="#clear-prefix-and-suffix-on-blur" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clear Prefix and Suffix on Blur</h3><p>The default value of clearPrefix and clearSuffix is false. Both work in same way.</p><pre>
+<label for="example5">Try Me!</label>
+<input type="text" value="123456" id="example5" name="example5">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    clearPrefix: true,
+    clearSuffix: true,
+    suffix: '$$'
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="allow-negatives" class="anchor" href="#allow-negatives" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allow Negatives</h3><p>The default value of allowNegative property is false. Zero values will not be negative.</p><pre>
+<label for="example6">Try Me!</label>
+<input type="text" value="-123456" id="example6" name="example6">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    allowNegative: true
+});
+
+// HTML
+<input type="text" value="-123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="plus-sign" class="anchor" href="#plus-sign" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plus sign</h3><p>Sometimes show the plus sign can improve your usability. Since you allow this option you will automaticly allow the use of the minus sign.</p><pre>
+<label for="example9">Try Me!</label>
+<input type="text" value="123456" id="example9" name="example9">
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: '',
+    thousandsSeparator: '',
+    insertPlusSign: 'true'
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+</xmp>
+</pre><h3><a id="unmask-function" class="anchor" href="#unmask-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unmask function</h3><p>Return the value without mask. Negative numbers will return the minus signal.</p><pre>
+<label for="example6-1">Try Me!</label>
+<input type="text" value="-123456" id="example6-1" name="example6-1">
+<button id="unmask-test" class="button">Alert Value Unmask</button>
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    allowNegative: true
+});
+
+$("#button").click(function() {
+    alert($('#element').unmask());
+});
+
+// HTML
+<input type="text" value="-123456" id="element" name="element">
+<button id="button" class="button">Alert Value Unmask</button>
+</xmp>
+</pre><h3><a id="tofloat-function" class="anchor" href="#tofloat-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Price to Float</h3><p>Return the value in float.</p><pre>
+<label for="example8-1">Try Me!</label>
+<input type="text" value="-123456" id="example8-1" name="example6-1">
+<button id="float-test" class="button">Alert Float Value</button>
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: 'R$ ',
+    allowNegative: true
+});
+
+$("#float").click(function() {
+    alert($('#element').priceToFloat());
+});
+
+// HTML
+<input type="text" value="-123456" id="element" name="element">
+<button id="button" class="button">Alert Float Value</button>
+</xmp>
+</pre><h3><a id="unprice-price" class="anchor" href="#unprice-price" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unprice and Price function</h3><p>You can switch on and off the price format for the elements.</p><pre>
+<label for="example7-1">Try Me!</label>
+<input type="text" value="123456" id="example7-1" name="example7-1">
+<button id="unprice-test" class="button">Unprice Format</button>
+<button id="price-test" class="button">Price Format</button>
+<xmp>
+// JavaScript
+$('#element').priceFormat({
+    prefix: 'R$',
+    suffix: '$$',
+    clearSuffix: true,
+    clearPrefix: true
+});
+
+$("#unprice").click(function() {
+    $('#element').unpriceFormat();
+});
+
+$("#price").click(function() {
+    $('#element').priceFormat({
+        prefix: 'R$',
+        suffix: '$$',
+        clearSuffix: true,
+        clearPrefix: true
+    });
+});
+
+// HTML
+<input type="text" value="123456" id="element" name="element">
+<button id="unprice" class="button">Unprice Format</button>
+<button id="price" class="button">Price Format</button>
+</xmp>
+</pre><h3><a id="html-element" class="anchor" href="#html-element" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use it with any HTML Element</h3><p>You can and should use it with any HTML element.</p><pre>
+<span id="htmlfield">123456</span>
+<xmp>
+// JavaScript
+$('#htmlfield').priceFormat({
+    prefix: 'R$ ',
+    centsSeparator: ',',
+    thousandsSeparator: '.',
+    insertPlusSign: true
+});
+
+// HTML
+<span id="htmlfield">123456</span>
+</xmp>
+</pre></section><aside id="sidebar"><a href="https://github.com/flaviosilveira/Jquery-Price-Format/zipball/master" class="button"><small>Download</small> .zip file </a><a href="https://github.com/flaviosilveira/Jquery-Price-Format/tarball/master" class="button"><small>Download</small> .tar.gz file</a><p class="repo-owner"><a href="https://github.com/flaviosilveira/Jquery-Price-Format"></a> is maintained by <a href="https://github.com/flaviosilveira">flaviosilveira</a>.</p><p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p></aside></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script><script type="text/javascript" src="./javascripts/jquery.priceformat.min.js"></script><script type="text/javascript" src="./javascripts/demo.min.js"></script></body></html>
