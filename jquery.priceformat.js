@@ -15,7 +15,7 @@
     // detect if ctrl or metaKey(Mac) is pressed
     window.ctrl_down = false
     metaKey = false
-    
+
     $(window).bind('keyup keydown', function (e) {
         window.ctrl_down = e.ctrlKey;
         return true;
@@ -51,6 +51,7 @@
       var insertPlusSign = options.insertPlusSign;
       var clearOnEmpty = options.clearOnEmpty;
       var leadingZero = options.leadingZero;
+      var maxVal = options.maxVal;
 
       // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
       if (insertPlusSign) allowNegative = true;
@@ -89,7 +90,11 @@
             }
           }
         }
-
+        if (maxVal > 0 ) {
+            if (Number(formatted) > maxVal) {
+                formatted = maxVal.toString();
+            }
+        }
         return formatted;
       }
 
@@ -344,7 +349,8 @@
     allowNegative: false,
     insertPlusSign: false,
     clearOnEmpty: false,
-    leadingZero: true
+    leadingZero: true,
+    maxVal: 0
   };
 
 })(jQuery);
