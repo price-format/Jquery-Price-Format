@@ -3,7 +3,17 @@
 * Created By Eduardo Cuducos
 * Currently maintained by Flavio Silveira flavio [at] gmail [dot] com
 */
-(function($) {
+
+(function (factory) {
+  if (typeof define === "function" && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports !== 'undefined') {
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(jQuery);
+  }
+} (function($) {
+  'use strict';
 
   /****************
    * Main Function *
@@ -14,8 +24,8 @@
 
     // detect if ctrl or metaKey(Mac) is pressed
     window.ctrl_down = false
-    metaKey = false
-    
+    var metaKey = false
+
     $(window).bind('keyup keydown', function (e) {
         window.ctrl_down = e.ctrlKey;
         return true;
@@ -78,7 +88,7 @@
       function to_numbers(str) {
         var formatted = '';
         for (var i = 0; i < (str.length); i++) {
-          char_ = str.charAt(i);
+          var char_ = str.charAt(i);
           if (formatted.length == 0 && char_ == 0) char_ = false;
 
           if (char_ && char_.match(is_number)) {
@@ -135,7 +145,7 @@
         // apply thousands pontuation
         if (thousandsSeparator || $.trim(thousandsSeparator) != "") {
           for (var j = integerVal.length; j > 0; j--) {
-            char_ = integerVal.substr(j - 1, 1);
+            var char_ = integerVal.substr(j - 1, 1);
             thousandsCount++;
             if (thousandsCount % 3 == 0) char_ = thousandsSeparator + char_;
             thousandsFormatted = char_ + thousandsFormatted;
@@ -346,5 +356,4 @@
     clearOnEmpty: false,
     leadingZero: true
   };
-
-})(jQuery);
+}));
