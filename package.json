@@ -1,5 +1,23 @@
 {
   "name": "jquery-price-format",
+  "version": "2.0.0",
+  "homepage": "http://jquerypriceformat.com/",
+  "authors": [
+    "Eduardo Cuducos"
+  ],
+  "maintainer": [
+    "Flavio Silveira <flavioaugustosilveira@gmail.com>",
+    "Fernando Moreira <nandomoreira.me@gmail.com>"
+  ],
+  "description": "jQuery Price Format Plugin is a plugin to format input text and html tags as prices.",
+  "main": "jquery.priceformat.js",
+  "scripts": {
+    "start": "gulp",
+    "dev": "npm start",
+    "watch": "gulp watch",
+    "build": "gulp build",
+    "deploy": "gulp deploy"
+  },
   "devDependencies": {
     "browser-sync": "^2.18.6",
     "gulp": "^3.9.1",
