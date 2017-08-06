@@ -22,6 +22,10 @@
 
     var options = $.extend(true, {}, $.fn.priceFormat.defaults, options);
 
+    if (typeof options.callback == 'function') {
+      options.callback(this);
+    }
+
     // detect if ctrl or metaKey(Mac) is pressed
     window.ctrl_down = false
     var metaKey = false
@@ -50,6 +54,7 @@
 
       // load the pluggings settings
       var prefix = options.prefix;
+      var afterMethod = options.afterMethod;
       var suffix = options.suffix;
       var centsSeparator = options.centsSeparator;
       var thousandsSeparator = options.thousandsSeparator;
@@ -99,6 +104,7 @@
             }
           }
         }
+
 
         return formatted;
       }
@@ -174,6 +180,7 @@
         // apply the suffix
         if (suffix) formatted = formatted + suffix;
 
+
         return formatted;
       }
 
@@ -234,6 +241,12 @@
         if (str != price) set(price);
         var format = price_format('0', true);
         if (price == format && str != '0' && clearOnEmpty) set('');
+
+        //method to run after pricing
+        //afterMethod();
+        if (afterMethod){
+          afterMethod();
+        }
       }
 
       // Add prefix on focus
@@ -330,6 +343,7 @@
    * Price to Float *
    ******************/
   $.fn.priceToFloat = function() {
+    var field;
 
     if ($(this).is('input'))
       field = $(this).val() || [];
@@ -350,6 +364,7 @@
     limit: false,
     centsLimit: 2,
     clearPrefix: false,
+    afterMethod: '',
     clearSufix: false,
     allowNegative: false,
     insertPlusSign: false,
