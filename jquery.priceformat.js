@@ -331,6 +331,8 @@
    ******************/
   $.fn.priceToFloat = function() {
 
+    var field;
+
     if ($(this).is('input'))
       field = $(this).val() || [];
     else
