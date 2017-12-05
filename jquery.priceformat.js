@@ -61,6 +61,8 @@
       var insertPlusSign = options.insertPlusSign;
       var clearOnEmpty = options.clearOnEmpty;
       var leadingZero = options.leadingZero;
+      
+      obj.data('centsLimit', centsLimit);
 
       // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
       if (insertPlusSign) allowNegative = true;
@@ -338,7 +340,15 @@
     else
       field = $(this).html();
 
-    return parseFloat(field.replace(/[^0-9\-\.]/g, ''));
+    if (!field.length) return 0.00;
+
+    field = field.replace(/[^0-9\-]/g, '');
+    var end = field.length,
+        pos = end - parseInt($(this).data('centsLimit')),
+        beforeSubStr = field.substring(0, pos),
+        afterSubStr = field.substring(pos, end);
+
+    return parseFloat(beforeSubStr + '.' + afterSubStr);
   };
 
   /************
