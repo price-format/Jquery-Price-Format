@@ -112,8 +112,9 @@
 
       // format as price
       function price_format(str, ignore) {
-        if (!ignore && (str === '' || (str == price_format('0', true) && !allowZero)) && clearOnEmpty)
-          return '';
+        if (!ignore && (str === "" || (str === price_format("0", true) && !allowZero)) && clearOnEmpty) {
+          return "";
+        }
 
         // formatting settings
         var formatted = fill_with_zeroes(to_numbers(str));
