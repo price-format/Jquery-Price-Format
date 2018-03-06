@@ -61,6 +61,7 @@
       var insertPlusSign = options.insertPlusSign;
       var clearOnEmpty = options.clearOnEmpty;
       var leadingZero = options.leadingZero;
+      var allowZero = options.allowZero;
 
       // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
       if (insertPlusSign) allowNegative = true;
@@ -111,7 +112,7 @@
 
       // format as price
       function price_format(str, ignore) {
-        if (!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty)
+        if (!ignore && (str === '' || (str == price_format('0', true) && !allowZero)) && clearOnEmpty)
           return '';
 
         // formatting settings
@@ -233,7 +234,7 @@
         var price = price_format(str);
         if (str != price) set(price);
         var format = price_format('0', true);
-        if (price == format && str != '0' && clearOnEmpty) set('');
+        if (price == format && str != '0' && clearOnEmpty && !allowZero) set('');
       }
 
       // Add prefix on focus
@@ -356,6 +357,7 @@
     allowNegative: false,
     insertPlusSign: false,
     clearOnEmpty: false,
-    leadingZero: true
+    leadingZero: true,
+    allowZero: false
   };
 }));
