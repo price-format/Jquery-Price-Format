@@ -114,14 +114,6 @@
         if (!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty)
           return '';
 
-        if (str[str.length-3] != '.') {  // 1.11 # do nothing
-          if (str[str.length-2] == '.'){ // 1.1  # fill with 1 zero
-            str = str+"0"
-          } else {                       // 1    # fill with 2 zeros
-            str = str+"00"
-          }
-        }
-
         // formatting settings
         var formatted = fill_with_zeroes(to_numbers(str));
         var thousandsFormatted = '';
@@ -231,6 +223,22 @@
 
       }
 
+      // Fill cents missing
+      function fix_cents() {
+        var str = get();
+        if (str[str.length-3] != '.' && str[str.length-3] != ',') {  // 1.11  # do nothing
+          if (str[str.length-2] == '.' || str[str.length-2] == ','){ // 1.1   # fill with 1 zero
+            str = str+"0"
+          } else {                                                   // 1     # fill with 2 zeroes
+            str = str+"00"
+          }
+        }
+        var price = price_format(str);
+        if (str != price) set(price);
+        var format = price_format('0', true);
+        if (price == format && str != '0' && clearOnEmpty) set('');
+      }
+
       // Formatted price as a value
       function price_it() {
         var str = get();
@@ -294,6 +302,7 @@
 
       // If value has content
       if (get().length > 0) {
+        fix_cents();
         price_it();
         clear_prefix();
         clear_suffix();
