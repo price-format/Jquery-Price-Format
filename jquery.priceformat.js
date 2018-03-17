@@ -114,6 +114,13 @@
         if (!ignore && (str === '' || str == price_format('0', true)) && clearOnEmpty)
           return '';
 
+        if (str[str.length-3] == '.') {       // 1.11 # do nothing
+        } else if (str[str.length-2] == '.'){ // 1.1  # fill with 1 zero
+          str = str+"0"
+        } else {                              // 1    # fill with 2 zeros
+          str = str+"00"
+        }
+
         // formatting settings
         var formatted = fill_with_zeroes(to_numbers(str));
         var thousandsFormatted = '';
@@ -131,13 +138,9 @@
 
         // apply cents pontuation
         // This stops from adding a leading Zero '0.00' -> '.00'
-        if (leadingZero) {
+        if (leadingZero || integerVal !== "0") {
           formatted = integerVal + centsSeparator + centsVal;
         } else {
-          if (integerVal !== "0") {
-            formatted = integerVal + centsSeparator + centsVal;
-          }
-          else {
             formatted = centsSeparator + centsVal;
           }
         }
