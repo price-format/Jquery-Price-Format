@@ -224,19 +224,23 @@
       }
 
       // Fill cents missing
-      function fix_cents() {
-        var str = get();
+      function fix_cents_by_str(str) {
         if (str[str.length-3] != '.' && str[str.length-3] != ',') {  // 1.11  # do nothing
           if (str[str.length-2] == '.' || str[str.length-2] == ','){ // 1.1   # fill with 1 zero
-            str = str+"0"
+            str = str+"0";
           } else {                                                   // 1     # fill with 2 zeroes
-            str = str+"00"
+            str = str+"00";
           }
         }
-        var price = price_format(str);
-        if (str != price) set(price);
-        var format = price_format('0', true);
-        if (price == format && str != '0' && clearOnEmpty) set('');
+        return str;
+      }
+      function fix_cents() {
+        var str = get();
+        var new_str = fix_cents_by_str(str);
+        var price = fix_cents_by_str(price_format(str));
+        if (new_str != price) set(price);
+        var format = fix_cents_by_str(price_format('0', true));
+        if (price == format && new_str != '0' && new_str != '000' && clearOnEmpty) set('');
       }
 
       // Formatted price as a value
