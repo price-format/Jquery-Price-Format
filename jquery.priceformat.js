@@ -55,6 +55,7 @@
       // load the pluggings settings
       var prefix = options.prefix;
       var afterMethod = options.afterMethod;
+      var afterMethodParams = options.afterMethodParams;
       var suffix = options.suffix;
       var centsSeparator = options.centsSeparator;
       var thousandsSeparator = options.thousandsSeparator;
@@ -245,7 +246,11 @@
         //method to run after pricing
         //afterMethod();
         if (afterMethod){
-          afterMethod();
+          if (afterMethodParams){
+            afterMethod(afterMethodParams);
+          } else {
+            afterMethod();
+          }
         }
       }
 
