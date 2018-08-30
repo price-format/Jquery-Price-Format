@@ -247,7 +247,11 @@
         //afterMethod();
         if (afterMethod){
           if (afterMethodParams){
-            afterMethod(afterMethodParams);
+            if (afterMethodParams == 'self'){
+              afterMethod(obj);
+            } else {
+              afterMethod(afterMethodParams);
+            }
           } else {
             afterMethod();
           }
@@ -372,6 +376,7 @@
     centsLimit: 2,
     clearPrefix: false,
     afterMethod: '',
+    afterMethodParams: '',
     clearSufix: false,
     allowNegative: false,
     insertPlusSign: false,
