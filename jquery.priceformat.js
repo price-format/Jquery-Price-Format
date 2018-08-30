@@ -55,6 +55,7 @@
       // load the pluggings settings
       var prefix = options.prefix;
       var afterMethod = options.afterMethod;
+      var afterMethodParams = options.afterMethodParams;
       var suffix = options.suffix;
       var centsSeparator = options.centsSeparator;
       var thousandsSeparator = options.thousandsSeparator;
@@ -245,7 +246,15 @@
         //method to run after pricing
         //afterMethod();
         if (afterMethod){
-          afterMethod();
+          if (afterMethodParams){
+            if (afterMethodParams == 'self'){
+              afterMethod(obj);
+            } else {
+              afterMethod(afterMethodParams);
+            }
+          } else {
+            afterMethod();
+          }
         }
       }
 
@@ -367,6 +376,7 @@
     centsLimit: 2,
     clearPrefix: false,
     afterMethod: '',
+    afterMethodParams: '',
     clearSufix: false,
     allowNegative: false,
     insertPlusSign: false,
