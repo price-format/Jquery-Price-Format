@@ -42,4 +42,4 @@ Thumbs.db
 node_modules/
 .publish/
 .dist/
-
+/package-lock.json
