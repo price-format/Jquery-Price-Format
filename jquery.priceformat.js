@@ -61,6 +61,7 @@
       var insertPlusSign = options.insertPlusSign;
       var clearOnEmpty = options.clearOnEmpty;
       var leadingZero = options.leadingZero;
+      var initIntegers = options.initIntegers;
 
       // If insertPlusSign is on, it automatic turns on allowNegative, to work with Signs
       if (insertPlusSign) allowNegative = true;
@@ -261,6 +262,15 @@
         }
       }
 
+      function init_integer(){
+          var str = get();
+          if( to_numbers( str ) !=0 && str.indexOf( centsSeparator ) == -1 && str.indexOf( '.' ) == -1) {
+              str = str + centsSeparator;
+              for ( var i = 0; i < centsLimit ; i++ ) str = str + '0';
+          }
+          set( str );
+      }
+
       // bind the actions
       obj.bind('keydown.price_format', key_check);
       obj.bind('keyup.price_format', price_it);
@@ -290,6 +300,9 @@
 
       // If value has content
       if (get().length > 0) {
+        if( initIntegers ) {      
+          init_integer(); 
+        }
         price_it();
         clear_prefix();
         clear_suffix();
@@ -356,6 +369,7 @@
     allowNegative: false,
     insertPlusSign: false,
     clearOnEmpty: false,
-    leadingZero: true
+    leadingZero: true,
+    initIntegers: true
   };
 }));
