@@ -21,6 +21,9 @@
   $.fn.priceFormat = function(options) {
 
     var options = $.extend(true, {}, $.fn.priceFormat.defaults, options);
+    //storing the default options for later
+    var $this = $(this);
+    $this.data('options', options);
 
     // detect if ctrl or metaKey(Mac) is pressed
     window.ctrl_down = false
@@ -330,14 +333,17 @@
    * Price to Float *
    ******************/
   $.fn.priceToFloat = function() {
-
     var field;
 
     if ($(this).is('input'))
       field = $(this).val() || [];
     else
       field = $(this).html();
-
+    let options = $(this).data('options');
+    //replace thousands separator
+    field = field.replace(new RegExp('\\'+options.thousandsSeparator, "g"), '');
+    //replace cents separator with dot (to make it look like a float)
+    field = field.replace(new RegExp('\\'+options.centsSeparator, "g"), '.');
     return parseFloat(field.replace(/[^0-9\-\.]/g, ''));
   };
 
