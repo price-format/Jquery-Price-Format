@@ -131,13 +131,9 @@
 
         // apply cents pontuation
         // This stops from adding a leading Zero '0.00' -> '.00'
-        if (leadingZero) {
+        if (leadingZero || integerVal !== "0") {
           formatted = integerVal + centsSeparator + centsVal;
         } else {
-          if (integerVal !== "0") {
-            formatted = integerVal + centsSeparator + centsVal;
-          }
-          else {
             formatted = centsSeparator + centsVal;
           }
         }
@@ -227,6 +223,26 @@
 
       }
 
+      // Fill cents missing
+      function fix_cents_by_str(str) {
+        if (str[str.length-3] != '.' && str[str.length-3] != ',') {  // 1.11  # do nothing
+          if (str[str.length-2] == '.' || str[str.length-2] == ','){ // 1.1   # fill with 1 zero
+            str = str+"0";
+          } else {                                                   // 1     # fill with 2 zeroes
+            str = str+"00";
+          }
+        }
+        return str;
+      }
+      function fix_cents() {
+        var str = get();
+        var new_str = fix_cents_by_str(str);
+        var price = fix_cents_by_str(price_format(str));
+        if (new_str != price) set(price);
+        var format = fix_cents_by_str(price_format('0', true));
+        if (price == format && new_str != '0' && new_str != '000' && clearOnEmpty) set('');
+      }
+
       // Formatted price as a value
       function price_it() {
         var str = get();
@@ -290,6 +306,7 @@
 
       // If value has content
       if (get().length > 0) {
+        fix_cents();
         price_it();
         clear_prefix();
         clear_suffix();
